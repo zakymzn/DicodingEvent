@@ -3,4 +3,12 @@
     <string name="title_home">Home</string>
     <string name="title_upcoming">Upcoming</string>
     <string name="title_finished">Finished</string>
+    <string name="text_home_upcoming_events">Upcoming Events</string>
+    <string name="text_home_finished_events">Finished Events</string>
+    <string name="text_category">Seminar</string>
+    <string name="text_name">Nama Event</string>
+    <string name="text_owner_name">Penyelenggara Event</string>
+    <string name="text_summary">Ringkasan Event</string>
+    <string name="text_remaining_quota">Sisa Kuota</string>
+    <string name="text_countdown">Hitung Mundur</string>
 </resources>

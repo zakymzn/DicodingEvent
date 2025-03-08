@@ -1,4 +1,4 @@
-package com.example.dicodingevent.ui.home
+package com.example.dicodingevent.ui
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -11,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeUpcomingEventViewModel : ViewModel() {
+class SearchUpcomingEventViewModel : ViewModel() {
 
     private val _listEvents = MutableLiveData<List<ListEventsItem>>()
     val listEvents: LiveData<List<ListEventsItem>> = _listEvents
@@ -20,7 +20,7 @@ class HomeUpcomingEventViewModel : ViewModel() {
     val isLoading: LiveData<Boolean> = _isLoading
 
     companion object {
-        private const val TAG = "HomeUpcomingEventViewModel"
+        private const val TAG = "UpcomingEventViewModel"
         private const val UPCOMING_EVENT = 1
     }
 

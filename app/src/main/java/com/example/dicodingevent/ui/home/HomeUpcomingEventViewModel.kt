@@ -20,7 +20,7 @@ class HomeUpcomingEventViewModel : ViewModel() {
     val isLoading: LiveData<Boolean> = _isLoading
 
     companion object {
-        private const val TAG = "HomeViewModel"
+        private const val TAG = "HomeUpcomingEventViewModel"
         private const val UPCOMING_EVENT = 1
     }
 

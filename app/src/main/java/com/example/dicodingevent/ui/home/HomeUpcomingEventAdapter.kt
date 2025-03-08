@@ -15,7 +15,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
-class HomeAdapter : ListAdapter<ListEventsItem, HomeAdapter.MyViewHolder>(
+class HomeUpcomingEventAdapter : ListAdapter<ListEventsItem, HomeUpcomingEventAdapter.MyViewHolder>(
     DIFF_CALLBACK
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

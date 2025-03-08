@@ -11,13 +11,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel : ViewModel() {
+class HomeUpcomingEventViewModel : ViewModel() {
 
     private val _listEvents = MutableLiveData<List<ListEventsItem>>()
     val listEvents: LiveData<List<ListEventsItem>> = _listEvents
-
-//    private val _listEventsItem = MutableLiveData<ListEventsItem>()
-//    val listEventsItem: LiveData<ListEventsItem> = _listEventsItem
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -25,40 +22,15 @@ class HomeViewModel : ViewModel() {
     companion object {
         private const val TAG = "HomeViewModel"
         private const val UPCOMING_EVENT = 1
-        private const val FINISHED_EVENT = 0
     }
 
     init {
         getUpcomingEvents()
-        getFinishedEvents()
     }
 
     private fun getUpcomingEvents() {
         _isLoading.value = true
         val client = ApiConfig.getApiService().getEvents(UPCOMING_EVENT)
-        client.enqueue(object : Callback<EventListResponse> {
-            override fun onResponse(
-                call: Call<EventListResponse>,
-                response: Response<EventListResponse>
-            ) {
-                _isLoading.value = false
-                if (response.isSuccessful) {
-                    _listEvents.value = response.body()?.listEvents
-                } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
-                }
-            }
-
-            override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
-                _isLoading.value = false
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
-            }
-        })
-    }
-
-    private fun getFinishedEvents() {
-        _isLoading.value = true
-        val client = ApiConfig.getApiService().getEvents(FINISHED_EVENT)
         client.enqueue(object : Callback<EventListResponse> {
             override fun onResponse(
                 call: Call<EventListResponse>,

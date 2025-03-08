@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dicodingevent.data.response.ListEventsItem
-import com.example.dicodingevent.databinding.ItemEventCardBinding
+import com.example.dicodingevent.databinding.ItemEventBinding
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -19,7 +19,7 @@ class HomeFinishedEventAdapter : ListAdapter<ListEventsItem, HomeFinishedEventAd
     DIFF_CALLBACK
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding = ItemEventCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemEventBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
 
@@ -29,7 +29,7 @@ class HomeFinishedEventAdapter : ListAdapter<ListEventsItem, HomeFinishedEventAd
         holder.bind(event)
     }
 
-    class MyViewHolder(val binding: ItemEventCardBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MyViewHolder(val binding: ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(event: ListEventsItem) {
             val today = LocalDate.now()

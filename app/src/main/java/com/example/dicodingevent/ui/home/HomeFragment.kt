@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingevent.data.response.ListEventsItem
 import com.example.dicodingevent.databinding.FragmentHomeBinding
+import com.example.dicodingevent.ui.FinishedEventViewModel
+import com.example.dicodingevent.ui.UpcomingEventViewModel
 
 class HomeFragment : Fragment() {
 
@@ -36,26 +38,26 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeUpcomingEventViewModel = ViewModelProvider(this).get(HomeUpcomingEventViewModel::class.java)
-        val homeFinishedEventViewModel = ViewModelProvider(this).get(HomeFinishedEventViewModel::class.java)
+        val upcomingEventViewModel = ViewModelProvider(this).get(UpcomingEventViewModel::class.java)
+        val finishedEventViewModel = ViewModelProvider(this).get(FinishedEventViewModel::class.java)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        homeUpcomingEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
+        upcomingEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
             binding.rvHomeUpcomingEvents.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             getUpcomingEventsData(eventsItem)
         }
 
-        homeUpcomingEventViewModel.isLoading.observe(viewLifecycleOwner) {
+        upcomingEventViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
 
-        homeFinishedEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
+        finishedEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
             binding.rvHomeFinishedEvents.layoutManager = LinearLayoutManager(requireActivity())
             getFinishedEventsData(eventsItem)
         }
 
-        homeFinishedEventViewModel.isLoading.observe(viewLifecycleOwner) {
+        finishedEventViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
 

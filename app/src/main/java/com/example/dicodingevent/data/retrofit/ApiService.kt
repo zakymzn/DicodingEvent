@@ -5,19 +5,19 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface ApiService {
-    @GET("events?active={active}")
+    @GET("events")
     fun getEvents(
-        @Path("active") active: Int,
+        @Query("active") active: Int,
     ): Call<EventListResponse>
 
-    @GET("events?q={query}")
+    @GET("events")
     fun searchEvents(
-        @Path("query") query: String,
+        @Query("q") query: String,
     ): Call<EventListResponse>
 
-    @GET("events?limit={limit}")
+    @GET("events")
     fun getEventsLimit(
-        @Path("limit") limit: Int,
+        @Query("limit") limit: Int,
     ): Call<EventListResponse>
 
     @GET("events/{id}")

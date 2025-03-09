@@ -11,4 +11,5 @@
     <string name="text_summary">Ringkasan Event</string>
     <string name="text_remaining_quota">Sisa Kuota</string>
     <string name="text_countdown">Hitung Mundur</string>
+    <string name="searchbar_hint">Cari event</string>
 </resources>

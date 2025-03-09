@@ -8,26 +8,6 @@
     android:padding="16dp"
     tools:context=".ui.upcoming.UpcomingFragment" >
 
-<!--    <com.google.android.material.search.SearchBar-->
-<!--        android:id="@+id/searchBarUpcomingEvents"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="48dp"-->
-<!--        android:hint="@string/searchbar_hint"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-<!--    -->
-<!--    <com.google.android.material.search.SearchView-->
-<!--        android:id="@+id/searchView"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:hint="@string/searchbar_hint"-->
-<!--        app:layout_anchor="@id/searchBarUpcomingEvents"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
     <ProgressBar
         android:id="@+id/pbUpcomingEvents"
         style="?android:attr/progressBarStyle"
@@ -43,6 +23,7 @@
         android:id="@+id/rvUpcomingEvents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

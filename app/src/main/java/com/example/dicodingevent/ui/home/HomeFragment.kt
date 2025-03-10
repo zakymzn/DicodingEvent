@@ -19,13 +19,13 @@ class HomeFragment : Fragment() {
 
     private fun getUpcomingEventsData(eventsItem: List<ListEventsItem>) {
         val adapter = HomeUpcomingEventAdapter()
-        adapter.submitList(eventsItem)
+        if (eventsItem.count() <= 5) adapter.submitList(eventsItem) else adapter.submitList(eventsItem.subList(0,5))
         binding.rvHomeUpcomingEvents.adapter = adapter
     }
 
     private fun getFinishedEventsData(eventsItem: List<ListEventsItem>) {
         val adapter = HomeFinishedEventAdapter()
-        adapter.submitList(eventsItem)
+        adapter.submitList(eventsItem.subList(0,5))
         binding.rvHomeFinishedEvents.adapter = adapter
     }
 

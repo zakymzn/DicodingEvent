@@ -8,16 +8,12 @@ interface ApiService {
     @GET("events")
     fun getEvents(
         @Query("active") active: Int,
+        @Query("limit") limit: Int,
     ): Call<EventListResponse>
 
     @GET("events")
     fun searchEvents(
         @Query("q") query: String,
-    ): Call<EventListResponse>
-
-    @GET("events")
-    fun getEventsLimit(
-        @Query("limit") limit: Int,
     ): Call<EventListResponse>
 
     @GET("events/{id}")

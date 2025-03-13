@@ -4,6 +4,7 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -29,13 +30,14 @@ class HomeUpcomingEventAdapter : ListAdapter<ListEventsItem, HomeUpcomingEventAd
         holder.bind(event)
     }
 
-    class MyViewHolder(val binding: ItemEventCardBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MyViewHolder(val binding: ItemEventCardBinding) : RecyclerView.ViewHolder(binding.root) {
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(event: ListEventsItem) {
             val today = LocalDate.now()
             val separatedDateTime = event.beginTime?.split(" ")
             val convertedEventDate = LocalDate.parse(separatedDateTime?.get(0), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
             val convertedEventTime = LocalTime.parse(separatedDateTime?.get(1), DateTimeFormatter.ofPattern("HH:mm:ss"))
+            val id = event.id
 
             Glide.with(this@MyViewHolder.itemView.context)
                 .load(event.imageLogo)
@@ -46,6 +48,14 @@ class HomeUpcomingEventAdapter : ListAdapter<ListEventsItem, HomeUpcomingEventAd
             binding.tvSummary.text = "${event.summary}"
             binding.tvQuota.text = if (ChronoUnit.DAYS.between(today, convertedEventDate) > 0) "Sisa kuota: ${(event.registrants?.let { event.quota?.minus(it) })}" else null
             binding.tvCountdown.text = if (ChronoUnit.DAYS.between(today, convertedEventDate) > 0) "${ChronoUnit.DAYS.between(today, convertedEventDate)} hari lagi" else "Selesai"
+
+            binding.cardItemEvent.setOnClickListener { view ->
+                val toDetailFragment = HomeFragmentDirections.actionNavigationHomeToNavigationDetail()
+                if (id != null) {
+                    toDetailFragment.id = id
+                }
+                view.findNavController().navigate(toDetailFragment)
+            }
         }
     }
 

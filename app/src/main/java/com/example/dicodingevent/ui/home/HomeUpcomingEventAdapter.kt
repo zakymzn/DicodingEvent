@@ -30,7 +30,7 @@ class HomeUpcomingEventAdapter : ListAdapter<ListEventsItem, HomeUpcomingEventAd
         holder.bind(event)
     }
 
-    inner class MyViewHolder(val binding: ItemEventCardBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MyViewHolder(val binding: ItemEventCardBinding) : RecyclerView.ViewHolder(binding.root) {
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(event: ListEventsItem) {
             val today = LocalDate.now()

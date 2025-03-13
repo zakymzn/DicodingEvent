@@ -38,8 +38,8 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val upcomingEventViewModel = ViewModelProvider(this).get(UpcomingEventViewModel::class.java)
-        val finishedEventViewModel = ViewModelProvider(this).get(FinishedEventViewModel::class.java)
+        val upcomingEventViewModel = ViewModelProvider(this)[UpcomingEventViewModel::class.java]
+        val finishedEventViewModel = ViewModelProvider(this)[FinishedEventViewModel::class.java]
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

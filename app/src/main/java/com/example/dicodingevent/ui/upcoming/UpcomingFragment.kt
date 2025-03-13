@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingevent.data.response.ListEventsItem
 import com.example.dicodingevent.databinding.FragmentUpcomingBinding
-import com.example.dicodingevent.ui.UpcomingEventViewModel
 
 class UpcomingFragment : Fragment() {
 
@@ -31,7 +30,7 @@ class UpcomingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val upcomingEventViewModel = ViewModelProvider(this).get(UpcomingEventViewModel::class.java)
+        val upcomingEventViewModel = ViewModelProvider(this)[UpcomingEventViewModel::class.java]
         _binding = FragmentUpcomingBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

@@ -1,4 +1,4 @@
-package com.example.dicodingevent.ui
+package com.example.dicodingevent.ui.finished
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -30,7 +30,7 @@ class FinishedEventViewModel : ViewModel() {
 
     private fun getFinishedEvents() {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getEvents(FINISHED_EVENT)
+        val client = ApiConfig.getApiService().getEvents(FINISHED_EVENT, 40)
         client.enqueue(object : Callback<EventListResponse> {
             override fun onResponse(
                 call: Call<EventListResponse>,

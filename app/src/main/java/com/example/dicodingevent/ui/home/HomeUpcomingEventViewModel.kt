@@ -30,7 +30,7 @@ class HomeUpcomingEventViewModel : ViewModel() {
 
     private fun getUpcomingEvents() {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getEvents(UPCOMING_EVENT, 40)
+        val client = ApiConfig.getApiService().getEvents(UPCOMING_EVENT, 5)
         client.enqueue(object : Callback<EventListResponse> {
             override fun onResponse(
                 call: Call<EventListResponse>,

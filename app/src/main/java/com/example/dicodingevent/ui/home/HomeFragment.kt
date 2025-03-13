@@ -9,8 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingevent.data.response.ListEventsItem
 import com.example.dicodingevent.databinding.FragmentHomeBinding
-import com.example.dicodingevent.ui.FinishedEventViewModel
-import com.example.dicodingevent.ui.UpcomingEventViewModel
 
 class HomeFragment : Fragment() {
 
@@ -19,13 +17,13 @@ class HomeFragment : Fragment() {
 
     private fun getUpcomingEventsData(eventsItem: List<ListEventsItem>) {
         val adapter = HomeUpcomingEventAdapter()
-        if (eventsItem.count() <= 5) adapter.submitList(eventsItem) else adapter.submitList(eventsItem.subList(0,5))
+        adapter.submitList(eventsItem)
         binding.rvHomeUpcomingEvents.adapter = adapter
     }
 
     private fun getFinishedEventsData(eventsItem: List<ListEventsItem>) {
         val adapter = HomeFinishedEventAdapter()
-        adapter.submitList(eventsItem.subList(0,5))
+        adapter.submitList(eventsItem)
         binding.rvHomeFinishedEvents.adapter = adapter
     }
 
@@ -38,26 +36,26 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val upcomingEventViewModel = ViewModelProvider(this)[UpcomingEventViewModel::class.java]
-        val finishedEventViewModel = ViewModelProvider(this)[FinishedEventViewModel::class.java]
+        val homeUpcomingEventViewModel = ViewModelProvider(this)[HomeUpcomingEventViewModel::class.java]
+        val homeFinishedEventViewModel = ViewModelProvider(this)[HomeFinishedEventViewModel::class.java]
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        upcomingEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
+        homeUpcomingEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
             binding.rvHomeUpcomingEvents.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             getUpcomingEventsData(eventsItem)
         }
 
-        upcomingEventViewModel.isLoading.observe(viewLifecycleOwner) {
+        homeUpcomingEventViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
 
-        finishedEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
+        homeFinishedEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
             binding.rvHomeFinishedEvents.layoutManager = LinearLayoutManager(requireActivity())
             getFinishedEventsData(eventsItem)
         }
 
-        finishedEventViewModel.isLoading.observe(viewLifecycleOwner) {
+        homeFinishedEventViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
 

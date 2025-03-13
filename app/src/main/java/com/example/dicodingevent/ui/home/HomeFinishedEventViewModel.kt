@@ -30,7 +30,7 @@ class HomeFinishedEventViewModel : ViewModel() {
 
     private fun getFinishedEvents() {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getEvents(FINISHED_EVENT, 40)
+        val client = ApiConfig.getApiService().getEvents(FINISHED_EVENT, 5)
         client.enqueue(object : Callback<EventListResponse> {
             override fun onResponse(
                 call: Call<EventListResponse>,

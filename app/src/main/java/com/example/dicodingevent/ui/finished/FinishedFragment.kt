@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingevent.data.response.ListEventsItem
 import com.example.dicodingevent.databinding.FragmentFinishedBinding
-import com.example.dicodingevent.ui.FinishedEventViewModel
 
 class FinishedFragment : Fragment() {
 
@@ -31,7 +30,7 @@ class FinishedFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val finishedEventViewModel = ViewModelProvider(this).get(FinishedEventViewModel::class.java)
+        val finishedEventViewModel = ViewModelProvider(this)[FinishedEventViewModel::class.java]
         _binding = FragmentFinishedBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

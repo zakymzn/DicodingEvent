@@ -1,60 +1,90 @@
 package com.example.dicodingevent.ui.detail
 
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.dicodingevent.R
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.example.dicodingevent.databinding.FragmentDetailBinding
+import com.example.dicodingevent.data.response.Event
+import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private var _binding: FragmentDetailBinding? = null
+    private val binding get() = _binding!!
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getDetailEventData(event: Event) {
+        val today = LocalDate.now()
+
+        val separatedBeginTime = event.beginTime?.split(" ")
+        val convertedBeginDate = LocalDate.parse(separatedBeginTime?.get(0), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        val convertedBeginTime = LocalTime.parse(separatedBeginTime?.get(1), DateTimeFormatter.ofPattern("HH:mm:ss"))
+
+        val separatedEndTime = event.endTime?.split(" ")
+        val convertedEndDate = LocalDate.parse(separatedEndTime?.get(0), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        val convertedEndTime = LocalTime.parse(separatedEndTime?.get(1), DateTimeFormatter.ofPattern("HH:mm:ss"))
+
+        Glide.with(this)
+            .load(event.mediaCover)
+            .into(binding.ivMediaCover)
+        binding.tvName.text = "${event.name}"
+        binding.tvOwner.text = "Diselenggarakan oleh: ${event.ownerName}"
+        binding.tvCategory.text = "${event.category}"
+        binding.tvCityName.text = "${event.cityName}"
+        binding.tvQuota.text = if (ChronoUnit.DAYS.between(today, convertedBeginDate) > 0) "${(event.registrants?.let { event.quota?.minus(it) })}" else "Kuota habis"
+        binding.tvBeginTime.text = "Mulai\t: ${convertedBeginDate} ${convertedBeginTime}"
+        binding.tvEndTime.text = "Selesai\t: ${convertedEndDate} ${convertedEndTime}"
+        binding.tvDescriptionContent.text = Html.fromHtml(event.description)
+        binding.btRegister.setOnClickListener {
+            val urlIntent = Intent(Intent.ACTION_VIEW)
+            urlIntent.data = Uri.parse(event.link)
+            startActivity(urlIntent)
         }
     }
 
+    private fun showLoading(isLoading: Boolean) {
+        binding.pbDetailEvent.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+    ): View {
+        val detailEventViewModel = ViewModelProvider(this)[DetailEventViewModel::class.java]
+
+        _binding = FragmentDetailBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        detailEventViewModel.detailEvent.observe(viewLifecycleOwner) {event ->
+            if (event != null) {
+                getDetailEventData(event)
+            }
+        }
+
+        detailEventViewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
+        return root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

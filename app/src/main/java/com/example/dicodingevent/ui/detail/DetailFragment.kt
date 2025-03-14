@@ -57,6 +57,7 @@ class DetailFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.pbDetailEvent.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.svDetailEvent.visibility = if (isLoading) View.GONE else View.VISIBLE
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

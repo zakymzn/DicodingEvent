@@ -11,8 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dicodingevent.data.response.ListEventsItem
 import com.example.dicodingevent.databinding.ItemEventCardBinding
-import java.time.LocalDate
-import java.time.LocalTime
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
@@ -33,10 +32,9 @@ class HomeUpcomingEventAdapter : ListAdapter<ListEventsItem, HomeUpcomingEventAd
     class MyViewHolder(val binding: ItemEventCardBinding) : RecyclerView.ViewHolder(binding.root) {
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(event: ListEventsItem) {
-            val today = LocalDate.now()
-            val separatedDateTime = event.beginTime?.split(" ")
-            val convertedEventDate = LocalDate.parse(separatedDateTime?.get(0), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-            val convertedEventTime = LocalTime.parse(separatedDateTime?.get(1), DateTimeFormatter.ofPattern("HH:mm:ss"))
+            val today = LocalDateTime.now()
+            val parsedDateTime = LocalDateTime.parse(event.beginTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+
             val id = event.id
 
             Glide.with(this@MyViewHolder.itemView.context)
@@ -46,8 +44,14 @@ class HomeUpcomingEventAdapter : ListAdapter<ListEventsItem, HomeUpcomingEventAd
             binding.tvName.text = "${event.name}"
             binding.tvOwner.text = "oleh ${event.ownerName}"
             binding.tvSummary.text = "${event.summary}"
-            binding.tvQuota.text = if (ChronoUnit.DAYS.between(today, convertedEventDate) > 0) "Sisa kuota: ${(event.registrants?.let { event.quota?.minus(it) })}" else null
-            binding.tvCountdown.text = if (ChronoUnit.DAYS.between(today, convertedEventDate) > 0) "${ChronoUnit.DAYS.between(today, convertedEventDate)} hari lagi" else "Selesai"
+            binding.tvQuota.text = if (ChronoUnit.MINUTES.between(today, parsedDateTime) > 0) "Sisa kuota: ${(event.registrants?.let { event.quota?.minus(it) })}" else null
+            binding.tvCountdown.text = if (ChronoUnit.DAYS.between(today, parsedDateTime) > 0) {
+                "${ChronoUnit.DAYS.between(today, parsedDateTime)} hari lagi"
+            } else if (ChronoUnit.HOURS.between(today, parsedDateTime) in 1..24) {
+                "${ChronoUnit.HOURS.between(today, parsedDateTime)} jam lagi"
+            } else {
+                "Selesai"
+            }
 
             binding.cardItemEvent.setOnClickListener { view ->
                 val toDetailFragment = HomeFragmentDirections.actionNavigationHomeToNavigationDetail()

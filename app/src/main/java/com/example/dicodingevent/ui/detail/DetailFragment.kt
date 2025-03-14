@@ -15,8 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.dicodingevent.databinding.FragmentDetailBinding
 import com.example.dicodingevent.data.response.Event
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.LocalDate
-import java.time.LocalTime
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
@@ -28,15 +27,15 @@ class DetailFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getDetailEventData(event: Event) {
-        val today = LocalDate.now()
+        val today = LocalDateTime.now()
 
-        val separatedBeginTime = event.beginTime?.split(" ")
-        val convertedBeginDate = LocalDate.parse(separatedBeginTime?.get(0), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-        val convertedBeginTime = LocalTime.parse(separatedBeginTime?.get(1), DateTimeFormatter.ofPattern("HH:mm:ss"))
+        val parsedBeginTime = LocalDateTime.parse(event.beginTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+        val formattedBeginDate = parsedBeginTime.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
+        val formattedBeginTime = parsedBeginTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
 
-        val separatedEndTime = event.endTime?.split(" ")
-        val convertedEndDate = LocalDate.parse(separatedEndTime?.get(0), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-        val convertedEndTime = LocalTime.parse(separatedEndTime?.get(1), DateTimeFormatter.ofPattern("HH:mm:ss"))
+        val parsedEndTime = LocalDateTime.parse(event.endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+        val formattedEndDate = parsedEndTime.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
+        val formattedEndTime = parsedEndTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
 
         Glide.with(this)
             .load(event.mediaCover)
@@ -45,9 +44,9 @@ class DetailFragment : Fragment() {
         binding.tvOwner.text = "Diselenggarakan oleh: ${event.ownerName}"
         binding.tvCategory.text = "${event.category}"
         binding.tvCityName.text = "${event.cityName}"
-        binding.tvQuota.text = if (ChronoUnit.DAYS.between(today, convertedBeginDate) > 0) "${(event.registrants?.let { event.quota?.minus(it) })}" else "Kuota habis"
-        binding.tvBeginTime.text = "Mulai\t: ${convertedBeginDate} ${convertedBeginTime}"
-        binding.tvEndTime.text = "Selesai\t: ${convertedEndDate} ${convertedEndTime}"
+        binding.tvQuota.text = if (ChronoUnit.MINUTES.between(today, parsedBeginTime) > 0) "${(event.registrants?.let { event.quota?.minus(it) })}" else "Kuota habis"
+        binding.tvBeginTime.text = "Mulai\t: ${formattedBeginDate} ${formattedBeginTime}"
+        binding.tvEndTime.text = "Selesai\t: ${formattedEndDate} ${formattedEndTime}"
         binding.tvDescriptionContent.text = Html.fromHtml(event.description)
         binding.btRegister.setOnClickListener {
             val urlIntent = Intent(Intent.ACTION_VIEW)

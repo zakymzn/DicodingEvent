@@ -74,6 +74,7 @@
             android:textSize="10sp"
             android:maxLines="3"
             android:ellipsize="end"
+            android:justificationMode="inter_word"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvOwner" />
 

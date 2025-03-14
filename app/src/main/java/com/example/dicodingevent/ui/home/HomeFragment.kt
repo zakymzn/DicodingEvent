@@ -19,6 +19,14 @@ class HomeFragment : Fragment() {
         val adapter = HomeUpcomingEventAdapter()
         adapter.submitList(eventsItem)
         binding.rvHomeUpcomingEvents.adapter = adapter
+
+        if (eventsItem.isEmpty()) {
+            binding.ivIllustration.visibility = View.VISIBLE
+            binding.tvNoUpcomingEvent.visibility = View.VISIBLE
+        } else {
+            binding.ivIllustration.visibility = View.GONE
+            binding.tvNoUpcomingEvent.visibility = View.GONE
+        }
     }
 
     private fun getFinishedEventsData(eventsItem: List<ListEventsItem>) {

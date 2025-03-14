@@ -19,6 +19,14 @@ class UpcomingFragment : Fragment() {
         val adapter = UpcomingEventAdapter()
         adapter.submitList(eventsItem)
         binding.rvUpcomingEvents.adapter = adapter
+
+        if (eventsItem.isEmpty()) {
+            binding.ivIllustration.visibility = View.VISIBLE
+            binding.tvNoUpcomingEvent.visibility = View.VISIBLE
+        } else {
+            binding.ivIllustration.visibility = View.GONE
+            binding.tvNoUpcomingEvent.visibility = View.GONE
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {

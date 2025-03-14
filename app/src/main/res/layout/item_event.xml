@@ -36,9 +36,11 @@
             android:textStyle="bold"
             android:textColor="@color/soft_red"
             android:maxLines="1"
-            android:maxEms="16"
             android:ellipsize="end"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivLogo" />
 
         <TextView
@@ -63,8 +65,10 @@
             android:text="@string/text_owner_name"
             android:textSize="8sp"
             android:maxLines="1"
-            android:maxEms="24"
             android:ellipsize="end"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvCategory"
             app:layout_constraintStart_toEndOf="@+id/ivLogo" />
 
@@ -77,8 +81,10 @@
             android:text="@string/text_summary"
             android:textSize="10sp"
             android:maxLines="2"
-            android:maxEms="18"
             android:ellipsize="end"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvOwner"
             app:layout_constraintStart_toEndOf="@+id/ivLogo" />
 

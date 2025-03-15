@@ -46,10 +46,17 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeUpcomingEventViewModel = ViewModelProvider(this)[HomeUpcomingEventViewModel::class.java]
-        val homeFinishedEventViewModel = ViewModelProvider(this)[HomeFinishedEventViewModel::class.java]
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val homeUpcomingEventViewModel = ViewModelProvider(this)[HomeUpcomingEventViewModel::class.java]
+        val homeFinishedEventViewModel = ViewModelProvider(this)[HomeFinishedEventViewModel::class.java]
 
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
         val nestedScrollView = binding.nsvHome
@@ -79,8 +86,6 @@ class HomeFragment : Fragment() {
         homeFinishedEventViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
-
-        return root
     }
 
     override fun onDestroyView() {

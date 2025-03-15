@@ -33,9 +33,16 @@ class FinishedFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val finishedEventViewModel = ViewModelProvider(this)[FinishedEventViewModel::class.java]
         _binding = FragmentFinishedBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val finishedEventViewModel = ViewModelProvider(this)[FinishedEventViewModel::class.java]
 
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
         val rvFinishedEvents = binding.rvFinishedEvents
@@ -59,8 +66,6 @@ class FinishedFragment : Fragment() {
         finishedEventViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
-
-        return root
     }
 
     override fun onDestroyView() {

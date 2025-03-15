@@ -64,15 +64,21 @@ class DetailFragment : Fragment() {
         binding.clDetailEvent.visibility = if (isLoading) View.GONE else View.VISIBLE
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val detailEventViewModel = ViewModelProvider(this)[DetailEventViewModel::class.java]
-
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        return root
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val detailEventViewModel = ViewModelProvider(this)[DetailEventViewModel::class.java]
 
         val toolbar: Toolbar = binding.toolbar
         toolbar.setNavigationOnClickListener {
@@ -99,8 +105,6 @@ class DetailFragment : Fragment() {
         detailEventViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
-
-        return root
     }
 
     override fun onDestroyView() {

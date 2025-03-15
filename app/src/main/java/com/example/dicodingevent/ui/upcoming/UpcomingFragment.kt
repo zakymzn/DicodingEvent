@@ -41,9 +41,16 @@ class UpcomingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val upcomingEventViewModel = ViewModelProvider(this)[UpcomingEventViewModel::class.java]
         _binding = FragmentUpcomingBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val upcomingEventViewModel = ViewModelProvider(this)[UpcomingEventViewModel::class.java]
 
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
         val rvUpcomingEvents = binding.rvUpcomingEvents
@@ -67,8 +74,6 @@ class UpcomingFragment : Fragment() {
         upcomingEventViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
-
-        return root
     }
 
     override fun onDestroyView() {

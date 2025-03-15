@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -16,16 +16,31 @@
         android:visibility="gone"
         tools:visibility="visible"/>
 
-    <ScrollView
-        android:id="@+id/svDetailEvent"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="Detail"
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:navigationIconTint="?attr/colorOnPrimary"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clDetailEvent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/activity_horizontal_margin"
-            android:paddingBottom="75dp"
+            android:paddingBottom="100dp"
             tools:context=".ui.detail.DetailFragment">
 
             <ImageView
@@ -42,6 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:paddingHorizontal="@dimen/activity_horizontal_margin"
                 android:text="@string/text_name"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -56,6 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:paddingHorizontal="@dimen/activity_horizontal_margin"
                 android:text="@string/text_owner_name"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -68,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:stretchColumns="0,1,2"
                 android:layout_marginTop="8dp"
+                android:paddingHorizontal="@dimen/activity_horizontal_margin"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvOwner">
@@ -124,6 +142,7 @@
                 android:text="@string/text_time"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:paddingHorizontal="@dimen/activity_horizontal_margin"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tlCategoryLocationQuota" />
@@ -135,6 +154,7 @@
                 android:layout_marginTop="4dp"
                 android:text="@string/text_begin_time"
                 android:textSize="12sp"
+                android:paddingHorizontal="@dimen/activity_horizontal_margin"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvTime" />
@@ -146,6 +166,7 @@
                 android:layout_marginTop="4dp"
                 android:text="@string/text_end_time"
                 android:textSize="12sp"
+                android:paddingHorizontal="@dimen/activity_horizontal_margin"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvBeginTime" />
@@ -158,6 +179,7 @@
                 android:text="@string/text_description"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:paddingHorizontal="@dimen/activity_horizontal_margin"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvEndTime" />
@@ -167,6 +189,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:paddingHorizontal="@dimen/activity_horizontal_margin"
                 android:text="@string/text_description_content"
                 android:textSize="12sp"
                 android:justificationMode="inter_word"
@@ -178,14 +201,14 @@
                 android:id="@+id/btRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:text="@string/text_register"
                 android:textStyle="bold"
                 android:backgroundTint="@color/teal"
-                android:linksClickable="true"
                 android:autoLink="web"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDescriptionContent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

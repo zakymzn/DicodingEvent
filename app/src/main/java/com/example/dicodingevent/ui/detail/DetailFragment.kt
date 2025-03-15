@@ -10,7 +10,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.dicodingevent.databinding.FragmentDetailBinding
 import com.example.dicodingevent.data.response.Event
@@ -57,7 +59,7 @@ class DetailFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.pbDetailEvent.visibility = if (isLoading) View.VISIBLE else View.GONE
-        binding.svDetailEvent.visibility = if (isLoading) View.GONE else View.VISIBLE
+        binding.clDetailEvent.visibility = if (isLoading) View.GONE else View.VISIBLE
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -69,6 +71,11 @@ class DetailFragment : Fragment() {
 
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val toolbar: Toolbar = binding.toolbar
+        toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
 
         detailEventViewModel.detailEvent.observe(viewLifecycleOwner) {event ->
             if (event != null) {

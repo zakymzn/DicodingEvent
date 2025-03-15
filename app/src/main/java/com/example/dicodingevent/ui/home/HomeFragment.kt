@@ -1,6 +1,7 @@
 package com.example.dicodingevent.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,17 +59,6 @@ class HomeFragment : Fragment() {
         val homeUpcomingEventViewModel = ViewModelProvider(this)[HomeUpcomingEventViewModel::class.java]
         val homeFinishedEventViewModel = ViewModelProvider(this)[HomeFinishedEventViewModel::class.java]
 
-        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
-        val nestedScrollView = binding.nsvHome
-
-        nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-            if (scrollY > oldScrollY) {
-                bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
-            } else {
-                bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
-            }
-        }
-
         homeUpcomingEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
             binding.rvHomeUpcomingEvents.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             getUpcomingEventsData(eventsItem)
@@ -85,6 +75,22 @@ class HomeFragment : Fragment() {
 
         homeFinishedEventViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
+        }
+
+        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+        val nestedScrollView = binding.nsvHome
+
+        if (bottomNavigationView == null) {
+            Log.e("HomeFragment", "BottomNavigationView is null")
+            return
+        }
+
+        nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+            if (scrollY > oldScrollY) {
+                bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
+            } else {
+                bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
+            }
         }
     }
 

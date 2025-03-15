@@ -1,6 +1,7 @@
 package com.example.dicodingevent.ui.finished
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,8 +45,22 @@ class FinishedFragment : Fragment() {
 
         val finishedEventViewModel = ViewModelProvider(this)[FinishedEventViewModel::class.java]
 
+        finishedEventViewModel.listEvents.observe(viewLifecycleOwner) { eventsItem ->
+            binding.rvFinishedEvents.layoutManager = LinearLayoutManager(requireActivity())
+            getFinishedEventsData(eventsItem)
+        }
+
+        finishedEventViewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
         val rvFinishedEvents = binding.rvFinishedEvents
+
+        if (bottomNavigationView == null) {
+            Log.e("FinishedFragment", "BottomNavigationView is null")
+            return
+        }
 
         rvFinishedEvents.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -57,15 +72,6 @@ class FinishedFragment : Fragment() {
                 }
             }
         })
-
-        finishedEventViewModel.listEvents.observe(viewLifecycleOwner) { eventsItem ->
-            binding.rvFinishedEvents.layoutManager = LinearLayoutManager(requireActivity())
-            getFinishedEventsData(eventsItem)
-        }
-
-        finishedEventViewModel.isLoading.observe(viewLifecycleOwner) {
-            showLoading(it)
-        }
     }
 
     override fun onDestroyView() {

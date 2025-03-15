@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -85,17 +86,6 @@ class DetailFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
-        val scrollView = binding.svDetail
-
-        scrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-            if (scrollY > oldScrollY) {
-                bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
-            } else {
-                bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
-            }
-        }
-
         detailEventViewModel.detailEvent.observe(viewLifecycleOwner) {event ->
             if (event != null) {
                 getDetailEventData(event)
@@ -104,6 +94,22 @@ class DetailFragment : Fragment() {
 
         detailEventViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
+        }
+
+        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+        val scrollView = binding.svDetail
+
+        if (bottomNavigationView == null) {
+            Log.e("DetailFragment", "BottomNavigationView is null")
+            return
+        }
+
+        scrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+            if (scrollY > oldScrollY) {
+                bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
+            } else {
+                bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
+            }
         }
     }
 

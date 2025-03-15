@@ -1,6 +1,7 @@
 package com.example.dicodingevent.ui.upcoming
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,8 +53,22 @@ class UpcomingFragment : Fragment() {
 
         val upcomingEventViewModel = ViewModelProvider(this)[UpcomingEventViewModel::class.java]
 
+        upcomingEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
+            binding.rvUpcomingEvents.layoutManager = LinearLayoutManager(requireActivity())
+            getUpcomingEventsData(eventsItem)
+        }
+
+        upcomingEventViewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
         val rvUpcomingEvents = binding.rvUpcomingEvents
+
+        if (bottomNavigationView == null) {
+            Log.e("UpcomingFragment", "BottomNavigationView is null")
+            return
+        }
 
         rvUpcomingEvents.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -65,15 +80,6 @@ class UpcomingFragment : Fragment() {
                 }
             }
         })
-
-        upcomingEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
-            binding.rvUpcomingEvents.layoutManager = LinearLayoutManager(requireActivity())
-            getUpcomingEventsData(eventsItem)
-        }
-
-        upcomingEventViewModel.isLoading.observe(viewLifecycleOwner) {
-            showLoading(it)
-        }
     }
 
     override fun onDestroyView() {

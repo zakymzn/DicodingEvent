@@ -28,6 +28,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
@@ -37,7 +38,6 @@
             android:layout_height="match_parent"
             android:paddingTop="16dp"
             android:paddingHorizontal="16dp"
-            android:paddingBottom="50dp"
             tools:context=".ui.home.HomeFragment">
 
             <androidx.constraintlayout.widget.ConstraintLayout

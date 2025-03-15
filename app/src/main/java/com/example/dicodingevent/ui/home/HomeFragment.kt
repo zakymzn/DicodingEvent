@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dicodingevent.R
 import com.example.dicodingevent.data.response.ListEventsItem
 import com.example.dicodingevent.databinding.FragmentHomeBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeFragment : Fragment() {
 
@@ -48,6 +50,17 @@ class HomeFragment : Fragment() {
         val homeFinishedEventViewModel = ViewModelProvider(this)[HomeFinishedEventViewModel::class.java]
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+        val nestedScrollView = binding.nsvHome
+
+        nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+            if (scrollY > oldScrollY) {
+                bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
+            } else {
+                bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
+            }
+        }
 
         homeUpcomingEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
             binding.rvHomeUpcomingEvents.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)

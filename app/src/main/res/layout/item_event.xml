@@ -6,7 +6,7 @@
     android:id="@+id/itemEvent"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:layout_marginBottom="16dp"
+    android:layout_marginVertical="8dp"
     app:cardCornerRadius="8dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"

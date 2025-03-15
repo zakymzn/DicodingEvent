@@ -14,8 +14,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.dicodingevent.R
 import com.example.dicodingevent.databinding.FragmentDetailBinding
 import com.example.dicodingevent.data.response.Event
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -75,6 +77,17 @@ class DetailFragment : Fragment() {
         val toolbar: Toolbar = binding.toolbar
         toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
+        }
+
+        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+        val scrollView = binding.svDetail
+
+        scrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+            if (scrollY > oldScrollY) {
+                bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
+            } else {
+                bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
+            }
         }
 
         detailEventViewModel.detailEvent.observe(viewLifecycleOwner) {event ->

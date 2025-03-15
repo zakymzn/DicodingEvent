@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.dicodingevent.R
 import com.example.dicodingevent.data.response.ListEventsItem
 import com.example.dicodingevent.databinding.FragmentUpcomingBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class UpcomingFragment : Fragment() {
 
@@ -41,6 +44,20 @@ class UpcomingFragment : Fragment() {
         val upcomingEventViewModel = ViewModelProvider(this)[UpcomingEventViewModel::class.java]
         _binding = FragmentUpcomingBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+        val rvUpcomingEvents = binding.rvUpcomingEvents
+
+        rvUpcomingEvents.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
+                } else {
+                    bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
+                }
+            }
+        })
 
         upcomingEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
             binding.rvUpcomingEvents.layoutManager = LinearLayoutManager(requireActivity())

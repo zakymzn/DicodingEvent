@@ -13,6 +13,7 @@ interface ApiService {
 
     @GET("events")
     fun searchEvents(
+        @Query("active") active: Int,
         @Query("q") query: String,
     ): Call<EventListResponse>
 

@@ -75,7 +75,7 @@ class UpcomingFragment : Fragment() {
                 super.onScrolled(recyclerView, dx, dy)
                 if (dy > 0) {
                     bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
-                } else {
+                } else if (dy < 0) {
                     bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
                 }
             }

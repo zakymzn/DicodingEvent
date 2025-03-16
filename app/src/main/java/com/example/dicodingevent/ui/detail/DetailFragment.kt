@@ -107,7 +107,7 @@ class DetailFragment : Fragment() {
         scrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             if (scrollY > oldScrollY) {
                 bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
-            } else {
+            } else if (scrollY < oldScrollY) {
                 bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
             }
         }

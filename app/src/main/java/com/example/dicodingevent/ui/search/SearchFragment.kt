@@ -45,14 +45,9 @@ class SearchFragment : Fragment() {
 
         val searchBar = binding.searchBar
         val searchView = binding.searchView
-        val toolbar = binding.toolbar
 
         searchBar.setOnClickListener {
             searchView.show()
-        }
-
-        toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
         }
 
         val searchEventViewModel = ViewModelProvider(this)[SearchEventViewModel::class.java]

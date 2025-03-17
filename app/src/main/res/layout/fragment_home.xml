@@ -22,9 +22,20 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:menu="@menu/option_menu"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:layout_collapseMode="pin"/>
+                app:layout_collapseMode="pin">
+
+                <ImageButton
+                    android:id="@+id/ibSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:src="@drawable/baseline_search_24"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="16dp"
+                    app:tint="?attr/colorOnPrimary" />
+            </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 

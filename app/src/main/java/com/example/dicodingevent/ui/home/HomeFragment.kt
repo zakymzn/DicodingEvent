@@ -57,16 +57,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.searchMenu -> {
-                    view.findNavController()
-                        .navigate(HomeFragmentDirections.actionNavigationHomeToNavigationSearch())
-                    true
-                }
-
-                else -> false
-            }
+        binding.ibSearch.setOnClickListener { view ->
+            view.findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToNavigationSearch())
         }
 
         val homeUpcomingEventViewModel = ViewModelProvider(this)[HomeUpcomingEventViewModel::class.java]

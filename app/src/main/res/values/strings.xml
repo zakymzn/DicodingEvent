@@ -26,5 +26,5 @@
     <string name="title_detail">Detail</string>
     <string name="text_no_upcoming_events">Saat ini belum ada event yang akan datang. Tunggu kedatangan event selanjutnya ya!</string>
     <string name="title_search">Search</string>
-    <string name="title_search_event">Search Event</string>
+    <string name="title_search_event">Cari Event</string>
 </resources>

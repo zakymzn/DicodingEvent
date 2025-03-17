@@ -82,9 +82,7 @@ class DetailFragment : Fragment() {
         val detailEventViewModel = ViewModelProvider(this)[DetailEventViewModel::class.java]
 
         val toolbar: Toolbar = binding.toolbar
-        toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
-        }
+        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
 
         detailEventViewModel.detailEvent.observe(viewLifecycleOwner) {event ->
             if (event != null) {
@@ -96,20 +94,17 @@ class DetailFragment : Fragment() {
             showLoading(it)
         }
 
-        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
-        val scrollView = binding.svDetail
 
         if (bottomNavigationView == null) {
             Log.e("DetailFragment", "BottomNavigationView is null")
             return
         }
 
-        scrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-            if (scrollY > oldScrollY) {
-                bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
-            } else if (scrollY < oldScrollY) {
-                bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
-            }
+        bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
+
+        toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+            bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
         }
     }
 

@@ -14,4 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="colorOnSurfaceVariant">@color/white</item>
     </style>
+    <style name="Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">?attr/colorSecondary</item>
+    </style>
 </resources>

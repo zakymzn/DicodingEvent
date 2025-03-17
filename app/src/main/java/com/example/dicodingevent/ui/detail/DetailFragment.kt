@@ -53,7 +53,7 @@ class DetailFragment : Fragment() {
         binding.tvBeginTime.text = "Mulai\t: ${formattedBeginDate} ${formattedBeginTime}"
         binding.tvEndTime.text = "Selesai\t: ${formattedEndDate} ${formattedEndTime}"
         binding.tvDescriptionContent.text = Html.fromHtml(event.description)
-        binding.btRegister.setOnClickListener {
+        binding.efabRegister.setOnClickListener {
             val urlIntent = Intent(Intent.ACTION_VIEW)
             urlIntent.data = Uri.parse(event.link)
             startActivity(urlIntent)

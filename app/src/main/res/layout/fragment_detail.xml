@@ -197,19 +197,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
-
-            <Button
-                android:id="@+id/btRegister"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/text_register"
-                android:textStyle="bold"
-                android:backgroundTint="@color/teal"
-                android:autoLink="web"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDescriptionContent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/efabRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/text_register"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/teal"
+        android:autoLink="web"
+        android:layout_gravity="end|bottom"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

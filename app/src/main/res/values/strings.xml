@@ -28,4 +28,5 @@
     <string name="title_search">Search</string>
     <string name="title_search_event">Cari Event</string>
     <string name="text_see_web_page">Lihat halaman web</string>
+    <string name="text_event_finished">Event telah selesai</string>
 </resources>

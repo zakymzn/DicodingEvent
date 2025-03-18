@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -36,11 +37,11 @@ class DetailFragment : Fragment() {
 
         val parsedBeginTime = LocalDateTime.parse(event.beginTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
         val formattedBeginDate = parsedBeginTime.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
-        val formattedBeginTime = parsedBeginTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+        val formattedBeginTime = parsedBeginTime.format(DateTimeFormatter.ofPattern("HH:mm"))
 
         val parsedEndTime = LocalDateTime.parse(event.endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
         val formattedEndDate = parsedEndTime.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
-        val formattedEndTime = parsedEndTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+        val formattedEndTime = parsedEndTime.format(DateTimeFormatter.ofPattern("HH:mm"))
 
         Glide.with(this)
             .load(event.mediaCover)
@@ -49,12 +50,14 @@ class DetailFragment : Fragment() {
         binding.tvOwner.text = "Diselenggarakan oleh: ${event.ownerName}"
         binding.tvCategory.text = "${event.category}"
         binding.tvCityName.text = "${event.cityName}"
-        binding.tvQuota.text = if (ChronoUnit.MINUTES.between(today, parsedBeginTime) > 0) "${(event.registrants?.let { event.quota?.minus(it) })}" else "Kuota habis"
-        binding.tvBeginTime.text = "Mulai\t: ${formattedBeginDate} ${formattedBeginTime}"
+        binding.tvQuota.text = if (ChronoUnit.MINUTES.between(today, parsedBeginTime) > 0) "${(event.registrants?.let { event.quota?.minus(it) })} peserta" else "Kuota habis"
+        binding.tvBeginTime.text = "Mulai\t\t: ${formattedBeginDate} ${formattedBeginTime}"
         binding.tvEndTime.text = "Selesai\t: ${formattedEndDate} ${formattedEndTime}"
+
         binding.tvDescriptionContent.text = Html.fromHtml(event.description)
 
         if (ChronoUnit.MINUTES.between(today, parsedBeginTime) > 0) {
+            binding.tvEventFinished.visibility = View.GONE
             binding.efabRegister.visibility = View.VISIBLE
             binding.efabSeeWebPage.visibility = View.GONE
             binding.efabRegister.setOnClickListener {
@@ -63,6 +66,8 @@ class DetailFragment : Fragment() {
                 startActivity(urlIntent)
             }
         } else {
+            binding.tvEndTime.setTextColor(ContextCompat.getColor(requireContext(), R.color.soft_red))
+            binding.tvEventFinished.visibility = View.VISIBLE
             binding.efabRegister.visibility = View.GONE
             binding.efabSeeWebPage.visibility = View.VISIBLE
             binding.efabSeeWebPage.setOnClickListener {

@@ -56,8 +56,11 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val nestedScrollView = binding.nsvHome
+//        val swipeRefresh = binding.swiperefresh
         val homeUpcomingEventViewModel = ViewModelProvider(this)[HomeUpcomingEventViewModel::class.java]
         val homeFinishedEventViewModel = ViewModelProvider(this)[HomeFinishedEventViewModel::class.java]
+        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
 
         homeUpcomingEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
             binding.rvHomeUpcomingEvents.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
@@ -77,8 +80,19 @@ class HomeFragment : Fragment() {
             showLoading(it)
         }
 
-        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
-        val nestedScrollView = binding.nsvHome
+//        swipeRefresh.setOnRefreshListener {
+//            homeUpcomingEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
+//                binding.rvHomeUpcomingEvents.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+//                getUpcomingEventsData(eventsItem)
+//            }
+//
+//            homeFinishedEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
+//                binding.rvHomeFinishedEvents.layoutManager = LinearLayoutManager(requireActivity())
+//                getFinishedEventsData(eventsItem)
+//            }
+//
+//            swipeRefresh.isRefreshing = false
+//        }
 
         if (bottomNavigationView == null) {
             Log.e("HomeFragment", "BottomNavigationView is null")

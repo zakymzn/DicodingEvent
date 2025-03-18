@@ -45,12 +45,13 @@ class SearchFragment : Fragment() {
 
         val searchBar = binding.searchBar
         val searchView = binding.searchView
+        val searchEventViewModel = ViewModelProvider(this)[SearchEventViewModel::class.java]
+        val rvSearchEvents = binding.rvSearchEvents
+        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
 
         searchBar.setOnClickListener {
             searchView.show()
         }
-
-        val searchEventViewModel = ViewModelProvider(this)[SearchEventViewModel::class.java]
 
         searchView.setupWithSearchBar(searchBar)
         searchView.editText.setOnEditorActionListener { _, _, _ ->
@@ -71,9 +72,6 @@ class SearchFragment : Fragment() {
         searchEventViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
-
-        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
-        val rvSearchEvents = binding.rvSearchEvents
 
         if (bottomNavigationView == null) {
             Log.e("SearchFragment", "BottomNavigationView is null")

@@ -100,6 +100,11 @@ class DetailFragment : Fragment() {
         val detailEventViewModel = ViewModelProvider(this)[DetailEventViewModel::class.java]
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
 
+        toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+            bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
+        }
+
         detailEventViewModel.detailEvent.observe(viewLifecycleOwner) {event ->
             if (event != null) {
                 getDetailEventData(event)
@@ -110,18 +115,12 @@ class DetailFragment : Fragment() {
             showLoading(it)
         }
 
-
         if (bottomNavigationView == null) {
             Log.e("DetailFragment", "BottomNavigationView is null")
             return
         }
 
         bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
-
-        toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
-            bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
-        }
     }
 
     override fun onDestroyView() {

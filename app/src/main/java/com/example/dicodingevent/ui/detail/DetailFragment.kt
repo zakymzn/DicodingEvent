@@ -53,10 +53,23 @@ class DetailFragment : Fragment() {
         binding.tvBeginTime.text = "Mulai\t: ${formattedBeginDate} ${formattedBeginTime}"
         binding.tvEndTime.text = "Selesai\t: ${formattedEndDate} ${formattedEndTime}"
         binding.tvDescriptionContent.text = Html.fromHtml(event.description)
-        binding.efabRegister.setOnClickListener {
-            val urlIntent = Intent(Intent.ACTION_VIEW)
-            urlIntent.data = Uri.parse(event.link)
-            startActivity(urlIntent)
+
+        if (ChronoUnit.MINUTES.between(today, parsedBeginTime) > 0) {
+            binding.efabRegister.visibility = View.VISIBLE
+            binding.efabSeeWebPage.visibility = View.GONE
+            binding.efabRegister.setOnClickListener {
+                val urlIntent = Intent(Intent.ACTION_VIEW)
+                urlIntent.data = Uri.parse(event.link)
+                startActivity(urlIntent)
+            }
+        } else {
+            binding.efabRegister.visibility = View.GONE
+            binding.efabSeeWebPage.visibility = View.VISIBLE
+            binding.efabSeeWebPage.setOnClickListener {
+                val urlIntent = Intent(Intent.ACTION_VIEW)
+                urlIntent.data = Uri.parse(event.link)
+                startActivity(urlIntent)
+            }
         }
     }
 

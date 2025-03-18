@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.hilt.android)
     implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.swiperefreshlayout)
     kapt(libs.hilt.android.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

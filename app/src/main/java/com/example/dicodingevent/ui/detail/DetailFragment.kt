@@ -53,7 +53,6 @@ class DetailFragment : Fragment() {
         binding.tvQuota.text = if (ChronoUnit.MINUTES.between(today, parsedBeginTime) > 0) "${(event.registrants?.let { event.quota?.minus(it) })} peserta" else "Kuota habis"
         binding.tvBeginTime.text = "Mulai\t\t: ${formattedBeginDate} ${formattedBeginTime}"
         binding.tvEndTime.text = "Selesai\t: ${formattedEndDate} ${formattedEndTime}"
-
         binding.tvDescriptionContent.text = Html.fromHtml(event.description)
 
         if (ChronoUnit.MINUTES.between(today, parsedBeginTime) > 0) {
@@ -97,9 +96,8 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val detailEventViewModel = ViewModelProvider(this)[DetailEventViewModel::class.java]
-
         val toolbar: Toolbar = binding.toolbar
+        val detailEventViewModel = ViewModelProvider(this)[DetailEventViewModel::class.java]
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
 
         detailEventViewModel.detailEvent.observe(viewLifecycleOwner) {event ->

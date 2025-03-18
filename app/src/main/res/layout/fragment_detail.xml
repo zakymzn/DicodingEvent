@@ -154,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/text_begin_time"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:paddingHorizontal="@dimen/activity_horizontal_margin"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -162,15 +162,28 @@
 
             <TextView
                 android:id="@+id/tvEndTime"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/text_end_time"
-                android:textSize="12sp"
-                android:paddingHorizontal="@dimen/activity_horizontal_margin"
+                android:textSize="14sp"
+                android:paddingHorizontal="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvBeginTime" />
+
+            <TextView
+                android:id="@+id/tvEventFinished"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/text_event_finished"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:background="@color/soft_red"
+                android:paddingHorizontal="4dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@+id/tvEndTime"
+                app:layout_constraintTop_toBottomOf="@+id/tvBeginTime"/>
 
             <TextView
                 android:id="@+id/tvDescription"
@@ -192,7 +205,7 @@
                 android:layout_marginTop="4dp"
                 android:paddingHorizontal="@dimen/activity_horizontal_margin"
                 android:text="@string/text_description_content"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:justificationMode="inter_word"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

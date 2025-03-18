@@ -49,6 +49,8 @@ class HomeUpcomingEventAdapter : ListAdapter<ListEventsItem, HomeUpcomingEventAd
                 "${ChronoUnit.DAYS.between(today, parsedDateTime)} hari lagi"
             } else if (ChronoUnit.HOURS.between(today, parsedDateTime) in 1..24) {
                 "${ChronoUnit.HOURS.between(today, parsedDateTime)} jam lagi"
+            } else if (ChronoUnit.MINUTES.between(today, parsedDateTime) in 1..60) {
+                "${ChronoUnit.MINUTES.between(today, parsedDateTime)} menit lagi"
             } else {
                 "Selesai"
             }

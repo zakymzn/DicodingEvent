@@ -29,4 +29,7 @@
     <string name="title_search_event">Cari Event</string>
     <string name="text_see_web_page">Lihat halaman web</string>
     <string name="text_event_finished">Event telah selesai</string>
+    <string name="text_no_internet_connection">Tidak ada koneksi internet.\nSilahkan periksa pengaturan internet Anda.</string>
+    <string name="text_failed_to_get_data">Gagal mendapatkan data event</string>
+    <string name="text_try_again">Coba Lagi</string>
 </resources>

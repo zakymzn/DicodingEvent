@@ -1,12 +1,15 @@
 package com.example.dicodingevent.ui.home
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingevent.R
 import com.example.dicodingevent.data.response.ListEventsItem
@@ -57,10 +60,14 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val nestedScrollView = binding.nsvHome
-//        val swipeRefresh = binding.swiperefresh
         val homeUpcomingEventViewModel = ViewModelProvider(this)[HomeUpcomingEventViewModel::class.java]
         val homeFinishedEventViewModel = ViewModelProvider(this)[HomeFinishedEventViewModel::class.java]
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+
+        binding.btTryAgain.setOnClickListener {
+            findNavController().navigateUp()
+            findNavController().navigate(R.id.navigation_home)
+        }
 
         homeUpcomingEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
             binding.rvHomeUpcomingEvents.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
@@ -80,19 +87,14 @@ class HomeFragment : Fragment() {
             showLoading(it)
         }
 
-//        swipeRefresh.setOnRefreshListener {
-//            homeUpcomingEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
-//                binding.rvHomeUpcomingEvents.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-//                getUpcomingEventsData(eventsItem)
-//            }
-//
-//            homeFinishedEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
-//                binding.rvHomeFinishedEvents.layoutManager = LinearLayoutManager(requireActivity())
-//                getFinishedEventsData(eventsItem)
-//            }
-//
-//            swipeRefresh.isRefreshing = false
-//        }
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (homeUpcomingEventViewModel.listEvents.value?.size == null && homeFinishedEventViewModel.listEvents.value?.size == null) {
+                Log.e("HomeFragment", "No data available")
+                binding.clUpcomingEvents.visibility = View.GONE
+                binding.clFinishedEvents.visibility = View.GONE
+                binding.clFailedToGetData.visibility = View.VISIBLE
+            }
+        }, 5000)
 
         if (bottomNavigationView == null) {
             Log.e("HomeFragment", "BottomNavigationView is null")

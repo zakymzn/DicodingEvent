@@ -44,7 +44,6 @@ class FinishedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val finishedEventViewModel = ViewModelProvider(this)[FinishedEventViewModel::class.java]
-        val swipeRefresh = binding.swiperefresh
         val rvFinishedEvents = binding.rvFinishedEvents
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
 
@@ -55,14 +54,6 @@ class FinishedFragment : Fragment() {
 
         finishedEventViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
-        }
-
-        swipeRefresh.setOnRefreshListener {
-            finishedEventViewModel.listEvents.observe(viewLifecycleOwner) { eventsItem ->
-                binding.rvFinishedEvents.layoutManager = LinearLayoutManager(requireActivity())
-                getFinishedEventsData(eventsItem)
-            }
-            swipeRefresh.isRefreshing = false
         }
 
         if (bottomNavigationView == null) {

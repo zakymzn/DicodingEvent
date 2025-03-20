@@ -52,7 +52,6 @@ class UpcomingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val upcomingEventViewModel = ViewModelProvider(this)[UpcomingEventViewModel::class.java]
-        val swipeRefresh = binding.swiperefresh
         val rvUpcomingEvents = binding.rvUpcomingEvents
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
 
@@ -63,14 +62,6 @@ class UpcomingFragment : Fragment() {
 
         upcomingEventViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
-        }
-
-        swipeRefresh.setOnRefreshListener {
-            upcomingEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
-                binding.rvUpcomingEvents.layoutManager = LinearLayoutManager(requireActivity())
-                getUpcomingEventsData(eventsItem)
-            }
-            swipeRefresh.isRefreshing = false
         }
 
         if (bottomNavigationView == null) {

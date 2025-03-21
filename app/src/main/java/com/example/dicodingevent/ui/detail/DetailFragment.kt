@@ -47,12 +47,12 @@ class DetailFragment : Fragment() {
             .load(event.mediaCover)
             .into(binding.ivMediaCover)
         binding.tvName.text = "${event.name}"
-        binding.tvOwner.text = "Diselenggarakan oleh: ${event.ownerName}"
+        binding.tvOwner.text = getString(R.string.diselenggarakan_oleh, event.ownerName)
         binding.tvCategory.text = "${event.category}"
         binding.tvCityName.text = "${event.cityName}"
         binding.tvQuota.text = if (ChronoUnit.MINUTES.between(today, parsedBeginTime) > 0) "${(event.registrants?.let { event.quota?.minus(it) })} peserta" else "Kuota habis"
-        binding.tvBeginTime.text = "Mulai\t\t: ${formattedBeginDate} ${formattedBeginTime}"
-        binding.tvEndTime.text = "Selesai\t: ${formattedEndDate} ${formattedEndTime}"
+        binding.tvBeginTime.text = getString(R.string.mulai, formattedBeginDate, formattedBeginTime)
+        binding.tvEndTime.text = getString(R.string.selesai, formattedEndDate, formattedEndTime)
         binding.tvDescriptionContent.text = Html.fromHtml(event.description)
 
         if (ChronoUnit.MINUTES.between(today, parsedBeginTime) > 0) {

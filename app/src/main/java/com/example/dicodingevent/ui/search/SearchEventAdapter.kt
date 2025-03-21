@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.dicodingevent.R
 import com.example.dicodingevent.data.response.ListEventsItem
 import com.example.dicodingevent.databinding.ItemEventBinding
 import java.time.LocalDateTime
@@ -43,7 +44,7 @@ class SearchEventAdapter : ListAdapter<ListEventsItem, SearchEventAdapter.MyView
                 .into(binding.ivLogo)
             binding.tvCategory.text = "${event.category}"
             binding.tvName.text = "${event.name}"
-            binding.tvOwner.text = "oleh ${event.ownerName}"
+            binding.tvOwner.text = this.itemView.context.getString(R.string.oleh, event.ownerName)
             binding.tvSummary.text = "${event.summary}"
             binding.tvQuota.text = if (ChronoUnit.MINUTES.between(today, parsedDateTime) > 0) "Sisa kuota: ${(event.registrants?.let { event.quota?.minus(it) })}" else null
             binding.tvCountdown.text = if (ChronoUnit.DAYS.between(today, parsedDateTime) > 0) {

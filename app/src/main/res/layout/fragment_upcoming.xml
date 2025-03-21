@@ -24,10 +24,21 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvUpcomingEvents"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="75dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar"/>
+
     <ImageView
         android:id="@+id/ivIllustration"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:contentDescription="@string/description_no_upcoming_events"
         android:src="@drawable/website_setup_concept_landing_page"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,8 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/text_no_upcoming_events"
-        android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textAlignment="center"
         android:visibility="gone"
         android:paddingHorizontal="16dp"
@@ -49,16 +59,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:visibility="visible" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvUpcomingEvents"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp"
-        android:paddingBottom="75dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar"/>
 
     <ProgressBar
         android:id="@+id/pbUpcomingEvents"

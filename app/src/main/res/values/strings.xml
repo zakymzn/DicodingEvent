@@ -12,7 +12,6 @@
     <string name="text_remaining_quota">Sisa Kuota</string>
     <string name="text_countdown">Hitung Mundur</string>
     <string name="searchbar_hint">Cari event</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="text_city_name">Nama Kota</string>
     <string name="text_time">Jadwal Pelaksanaan</string>
     <string name="text_begin_time">Waktu dimulai</string>
@@ -26,10 +25,18 @@
     <string name="title_detail">Detail</string>
     <string name="text_no_upcoming_events">Saat ini belum ada event yang akan datang. Tunggu kedatangan event selanjutnya ya!</string>
     <string name="title_search">Search</string>
-    <string name="title_search_event">Cari Event</string>
     <string name="text_see_web_page">Lihat halaman web</string>
     <string name="text_event_finished">Event telah selesai</string>
     <string name="text_no_internet_connection">Tidak ada koneksi internet.\nSilahkan periksa pengaturan internet Anda.</string>
     <string name="text_failed_to_get_data">Gagal mendapatkan data event</string>
     <string name="text_try_again">Coba Lagi</string>
+    <string name="description_logo">Logo</string>
+    <string name="description_no_internet_connection">No Internet Connection</string>
+    <string name="description_media_cover">Media Cover</string>
+    <string name="description_failed_to_get_data">Failed to Get Data</string>
+    <string name="description_no_upcoming_events">No Upcoming Events</string>
+    <string name="diselenggarakan_oleh">Diselenggarakan oleh: %1$s</string>
+    <string name="mulai">Mulai\t\t: %1$s %2$s</string>
+    <string name="selesai">Selesai\t: %1$s %2$s</string>
+    <string name="oleh">oleh %1$s</string>
 </resources>

@@ -48,6 +48,7 @@
                 android:id="@+id/ivMediaCover"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/description_media_cover"
                 android:src="@mipmap/ic_launcher_round"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -58,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:paddingHorizontal="@dimen/activity_horizontal_margin"
+                android:paddingHorizontal="16dp"
                 android:text="@string/text_name"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -66,14 +67,15 @@
                 android:justificationMode="inter_word"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivMediaCover" />
+                app:layout_constraintTop_toBottomOf="@+id/ivMediaCover"
+                tools:targetApi="o" />
 
             <TextView
                 android:id="@+id/tvOwner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:paddingHorizontal="@dimen/activity_horizontal_margin"
+                android:paddingHorizontal="16dp"
                 android:text="@string/text_owner_name"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -86,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:stretchColumns="0,1,2"
                 android:layout_marginTop="8dp"
-                android:paddingHorizontal="@dimen/activity_horizontal_margin"
+                android:paddingHorizontal="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvOwner">
@@ -201,7 +203,7 @@
                 android:text="@string/text_description"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:paddingHorizontal="@dimen/activity_horizontal_margin"
+                android:paddingHorizontal="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/clEventSchedule" />
@@ -211,13 +213,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:paddingHorizontal="@dimen/activity_horizontal_margin"
+                android:paddingHorizontal="16dp"
                 android:text="@string/text_description_content"
                 android:textSize="14sp"
                 android:justificationMode="inter_word"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/tvDescription"
+                tools:targetApi="o" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

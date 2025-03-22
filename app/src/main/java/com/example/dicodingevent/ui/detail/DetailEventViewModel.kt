@@ -25,12 +25,11 @@ class DetailEventViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> = _errorMessage
+
     private val args = DetailFragmentArgs.fromSavedStateHandle(savedStateHandle)
     private val eventId = args.id
-
-    companion object {
-        private const val TAG = "DetailEventViewModel"
-    }
 
     init {
         getDetailEvent(eventId)
@@ -48,14 +47,20 @@ class DetailEventViewModel @Inject constructor(
                 if (response.isSuccessful) {
                     _detailEvent.value = response.body()?.event
                 } else {
+                    _errorMessage.value = response.message()
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<EventDetailResponse>, t: Throwable) {
                 _isLoading.value = false
+                _errorMessage.value = t.message.toString()
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
             }
         })
+    }
+
+    companion object {
+        private const val TAG = "DetailEventViewModel"
     }
 }

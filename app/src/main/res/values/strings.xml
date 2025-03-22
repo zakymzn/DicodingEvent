@@ -39,4 +39,6 @@
     <string name="mulai">Mulai\t\t: %1$s %2$s</string>
     <string name="selesai">Selesai\t: %1$s %2$s</string>
     <string name="oleh">oleh %1$s</string>
+    <string name="description_event_not_found">Event not found</string>
+    <string name="text_event_not_found">Event yang Anda cari tidak ditemukan</string>
 </resources>

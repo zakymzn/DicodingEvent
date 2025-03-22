@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -46,40 +47,52 @@ class DetailFragment : Fragment() {
         Glide.with(this)
             .load(event.mediaCover)
             .into(binding.ivMediaCover)
-        binding.tvName.text = "${event.name}"
-        binding.tvOwner.text = getString(R.string.diselenggarakan_oleh, event.ownerName)
-        binding.tvCategory.text = "${event.category}"
-        binding.tvCityName.text = "${event.cityName}"
-        binding.tvQuota.text = if (ChronoUnit.MINUTES.between(today, parsedBeginTime) > 0) "${(event.registrants?.let { event.quota?.minus(it) })} peserta" else "Kuota habis"
-        binding.tvBeginTime.text = getString(R.string.mulai, formattedBeginDate, formattedBeginTime)
-        binding.tvEndTime.text = getString(R.string.selesai, formattedEndDate, formattedEndTime)
-        binding.tvDescriptionContent.text = Html.fromHtml(event.description)
+        binding.apply {
+            tvName.text = "${event.name}"
+            tvOwner.text = getString(R.string.diselenggarakan_oleh, event.ownerName)
+            tvCategory.text = "${event.category}"
+            tvCityName.text = "${event.cityName}"
+            tvQuota.text = if (ChronoUnit.MINUTES.between(today, parsedBeginTime) > 0) "${(event.registrants?.let { event.quota?.minus(it) })} peserta" else "Kuota habis"
+            tvBeginTime.text = getString(R.string.mulai, formattedBeginDate, formattedBeginTime)
+            tvEndTime.text = getString(R.string.selesai, formattedEndDate, formattedEndTime)
+            tvDescriptionContent.text = Html.fromHtml(event.description)
+        }
 
         if (ChronoUnit.MINUTES.between(today, parsedBeginTime) > 0) {
-            binding.tvEventFinished.visibility = View.GONE
-            binding.efabRegister.visibility = View.VISIBLE
-            binding.efabSeeWebPage.visibility = View.GONE
-            binding.efabRegister.setOnClickListener {
-                val urlIntent = Intent(Intent.ACTION_VIEW)
-                urlIntent.data = Uri.parse(event.link)
-                startActivity(urlIntent)
+            binding.apply {
+                tvEventFinished.visibility = View.GONE
+                efabRegister.visibility = View.VISIBLE
+                efabSeeWebPage.visibility = View.GONE
+                efabRegister.setOnClickListener {
+                    val urlIntent = Intent(Intent.ACTION_VIEW)
+                    urlIntent.data = Uri.parse(event.link)
+                    startActivity(urlIntent)
+                }
             }
         } else {
-            binding.tvEndTime.setTextColor(ContextCompat.getColor(requireContext(), R.color.soft_red))
-            binding.tvEventFinished.visibility = View.VISIBLE
-            binding.efabRegister.visibility = View.GONE
-            binding.efabSeeWebPage.visibility = View.VISIBLE
-            binding.efabSeeWebPage.setOnClickListener {
-                val urlIntent = Intent(Intent.ACTION_VIEW)
-                urlIntent.data = Uri.parse(event.link)
-                startActivity(urlIntent)
+            binding.apply {
+                tvEndTime.setTextColor(ContextCompat.getColor(requireContext(), R.color.soft_red))
+                tvEventFinished.visibility = View.VISIBLE
+                efabRegister.visibility = View.GONE
+                efabSeeWebPage.visibility = View.VISIBLE
+                efabSeeWebPage.setOnClickListener {
+                    val urlIntent = Intent(Intent.ACTION_VIEW)
+                    urlIntent.data = Uri.parse(event.link)
+                    startActivity(urlIntent)
+                }
             }
         }
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.pbDetailEvent.visibility = if (isLoading) View.VISIBLE else View.GONE
-        binding.clDetailEvent.visibility = if (isLoading) View.GONE else View.VISIBLE
+        binding.apply {
+            pbDetailEvent.visibility = if (isLoading) View.VISIBLE else View.GONE
+            clDetailEvent.visibility = if (isLoading) View.GONE else View.VISIBLE
+        }
+    }
+
+    private fun showErrorMessage(errorMessage: String) {
+        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateView(
@@ -113,6 +126,10 @@ class DetailFragment : Fragment() {
 
         detailEventViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
+        }
+
+        detailEventViewModel.errorMessage.observe(viewLifecycleOwner) {
+            showErrorMessage(it)
         }
 
         if (bottomNavigationView == null) {

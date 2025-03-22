@@ -27,6 +27,29 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <ImageView
+        android:id="@+id/ivEventNotFound"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:contentDescription="@string/description_event_not_found"
+        android:src="@drawable/failed_to_get_data"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchBar"/>
+
+    <TextView
+        android:id="@+id/tvEventNotFound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_event_not_found"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivEventNotFound"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSearchEvents"
         android:layout_width="match_parent"

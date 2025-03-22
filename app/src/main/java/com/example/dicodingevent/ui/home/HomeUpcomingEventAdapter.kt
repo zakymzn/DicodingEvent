@@ -41,27 +41,28 @@ class HomeUpcomingEventAdapter : ListAdapter<ListEventsItem, HomeUpcomingEventAd
             Glide.with(this@MyViewHolder.itemView.context)
                 .load(event.imageLogo)
                 .into(binding.ivLogo)
-            binding.tvCategory.text = "${event.category}"
-            binding.tvName.text = "${event.name}"
-            binding.tvOwner.text = this.itemView.context.getString(R.string.oleh, event.ownerName)
-            binding.tvSummary.text = "${event.summary}"
-            binding.tvQuota.text = if (ChronoUnit.MINUTES.between(today, parsedDateTime) > 0) "Sisa kuota: ${(event.registrants?.let { event.quota?.minus(it) })}" else null
-            binding.tvCountdown.text = if (ChronoUnit.DAYS.between(today, parsedDateTime) > 0) {
-                "${ChronoUnit.DAYS.between(today, parsedDateTime)} hari lagi"
-            } else if (ChronoUnit.HOURS.between(today, parsedDateTime) in 1..24) {
-                "${ChronoUnit.HOURS.between(today, parsedDateTime)} jam lagi"
-            } else if (ChronoUnit.MINUTES.between(today, parsedDateTime) in 1..60) {
-                "${ChronoUnit.MINUTES.between(today, parsedDateTime)} menit lagi"
-            } else {
-                "Selesai"
-            }
-
-            binding.cardItemEvent.setOnClickListener { view ->
-                val toDetailFragment = HomeFragmentDirections.actionNavigationHomeToNavigationDetail()
-                if (id != null) {
-                    toDetailFragment.id = id
+            binding.apply {
+                tvCategory.text = "${event.category}"
+                tvName.text = "${event.name}"
+                tvOwner.text = this@MyViewHolder.itemView.context.getString(R.string.oleh, event.ownerName)
+                tvSummary.text = "${event.summary}"
+                tvQuota.text = if (ChronoUnit.MINUTES.between(today, parsedDateTime) > 0) "Sisa kuota: ${(event.registrants?.let { event.quota?.minus(it) })}" else null
+                tvCountdown.text = if (ChronoUnit.DAYS.between(today, parsedDateTime) > 0) {
+                    "${ChronoUnit.DAYS.between(today, parsedDateTime)} hari lagi"
+                } else if (ChronoUnit.HOURS.between(today, parsedDateTime) in 1..24) {
+                    "${ChronoUnit.HOURS.between(today, parsedDateTime)} jam lagi"
+                } else if (ChronoUnit.MINUTES.between(today, parsedDateTime) in 1..60) {
+                    "${ChronoUnit.MINUTES.between(today, parsedDateTime)} menit lagi"
+                } else {
+                    "Selesai"
                 }
-                view.findNavController().navigate(toDetailFragment)
+                cardItemEvent.setOnClickListener { view ->
+                    val toDetailFragment = HomeFragmentDirections.actionNavigationHomeToNavigationDetail()
+                    if (id != null) {
+                        toDetailFragment.id = id
+                    }
+                    view.findNavController().navigate(toDetailFragment)
+                }
             }
         }
     }

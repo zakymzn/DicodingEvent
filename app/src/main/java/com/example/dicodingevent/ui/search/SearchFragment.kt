@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,10 +24,26 @@ class SearchFragment : Fragment() {
         val adapter = SearchEventAdapter()
         adapter.submitList(eventsItem)
         binding.rvSearchEvents.adapter = adapter
+
+        if (eventsItem.isEmpty()) {
+            binding.apply {
+                binding.ivEventNotFound.visibility = View.VISIBLE
+                binding.tvEventNotFound.visibility = View.VISIBLE
+            }
+        } else {
+            binding.apply {
+                binding.ivEventNotFound.visibility = View.GONE
+                binding.tvEventNotFound.visibility = View.GONE
+            }
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
         binding.pbSearchEvents.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showErrorMessage(errorMessage: String) {
+        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateView(
@@ -70,6 +87,10 @@ class SearchFragment : Fragment() {
 
         searchEventViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
+        }
+
+        searchEventViewModel.errorMessage.observe(viewLifecycleOwner) {
+            showErrorMessage(it)
         }
 
         if (bottomNavigationView == null) {

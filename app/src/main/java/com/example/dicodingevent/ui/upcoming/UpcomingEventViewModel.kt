@@ -19,10 +19,8 @@ class UpcomingEventViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    companion object {
-        private const val TAG = "UpcomingEventViewModel"
-        private const val UPCOMING_EVENT = 1
-    }
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> = _errorMessage
 
     init {
         getUpcomingEvents()
@@ -40,14 +38,21 @@ class UpcomingEventViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     _listEvents.value = response.body()?.listEvents
                 } else {
+                    _errorMessage.value = response.message()
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
                 _isLoading.value = false
+                _errorMessage.value = t.message.toString()
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
             }
         })
+    }
+
+    companion object {
+        private const val TAG = "UpcomingEventViewModel"
+        private const val UPCOMING_EVENT = 1
     }
 }

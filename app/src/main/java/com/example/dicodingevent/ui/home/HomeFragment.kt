@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -27,11 +28,15 @@ class HomeFragment : Fragment() {
         binding.rvHomeUpcomingEvents.adapter = adapter
 
         if (eventsItem.isEmpty()) {
-            binding.ivIllustration.visibility = View.VISIBLE
-            binding.tvNoUpcomingEvent.visibility = View.VISIBLE
+            binding.apply {
+                ivIllustration.visibility = View.VISIBLE
+                tvNoUpcomingEvent.visibility = View.VISIBLE
+            }
         } else {
-            binding.ivIllustration.visibility = View.GONE
-            binding.tvNoUpcomingEvent.visibility = View.GONE
+            binding.apply {
+                ivIllustration.visibility = View.GONE
+                tvNoUpcomingEvent.visibility = View.GONE
+            }
         }
     }
 
@@ -41,8 +46,20 @@ class HomeFragment : Fragment() {
         binding.rvHomeFinishedEvents.adapter = adapter
     }
 
-    private fun showLoading(isLoading: Boolean) {
+    private fun showLoadingUpcomingEvents(isLoading: Boolean) {
         binding.pbHomeUpcomingEvents.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showLoadingFinishedEvents(isLoading: Boolean) {
+        binding.pbHomeFinishedEvents.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showErrorMessageUpcomingEvents(errorMessage: String) {
+        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showErrorMessageFinishedEvents(errorMessage: String) {
+        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateView(
@@ -75,7 +92,11 @@ class HomeFragment : Fragment() {
         }
 
         homeUpcomingEventViewModel.isLoading.observe(viewLifecycleOwner) {
-            showLoading(it)
+            showLoadingUpcomingEvents(it)
+        }
+
+        homeUpcomingEventViewModel.errorMessage.observe(viewLifecycleOwner) {
+            showErrorMessageUpcomingEvents(it)
         }
 
         homeFinishedEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
@@ -84,15 +105,21 @@ class HomeFragment : Fragment() {
         }
 
         homeFinishedEventViewModel.isLoading.observe(viewLifecycleOwner) {
-            showLoading(it)
+            showLoadingFinishedEvents(it)
+        }
+
+        homeFinishedEventViewModel.errorMessage.observe(viewLifecycleOwner) {
+            showErrorMessageFinishedEvents(it)
         }
 
         Handler(Looper.getMainLooper()).postDelayed({
             if (homeUpcomingEventViewModel.listEvents.value?.size == null && homeFinishedEventViewModel.listEvents.value?.size == null) {
                 Log.e("HomeFragment", "No data available")
-                binding.clUpcomingEvents.visibility = View.GONE
-                binding.clFinishedEvents.visibility = View.GONE
-                binding.clFailedToGetData.visibility = View.VISIBLE
+                binding.apply {
+                    clUpcomingEvents.visibility = View.GONE
+                    clFinishedEvents.visibility = View.GONE
+                    clFailedToGetData.visibility = View.VISIBLE
+                }
             }
         }, 5000)
 

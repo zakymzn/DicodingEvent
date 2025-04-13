@@ -1,4 +1,4 @@
-package com.example.dicodingevent.ui.upcoming
+package com.example.dicodingevent.ui.favorited
 
 import android.os.Build
 import android.view.LayoutInflater
@@ -12,17 +12,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dicodingevent.R
 import com.example.dicodingevent.data.local.entity.EventEntity
-import com.example.dicodingevent.data.remote.response.ListEventsItem
 import com.example.dicodingevent.databinding.ItemEventBinding
+import com.example.dicodingevent.ui.upcoming.UpcomingFragmentDirections
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+import kotlin.ranges.contains
 
-class UpcomingEventAdapter(private val onFavoriteClick: (EventEntity) -> Unit) : ListAdapter<EventEntity, UpcomingEventAdapter.MyViewHolder>(
+class FavoritedEventAdapter(private val onFavoriteClick: (EventEntity) -> Unit) : ListAdapter<EventEntity, FavoritedEventAdapter.MyViewHolder>(
     DIFF_CALLBACK
 ) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding = ItemEventBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): MyViewHolder {
+       val binding = ItemEventBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
 
@@ -69,7 +73,7 @@ class UpcomingEventAdapter(private val onFavoriteClick: (EventEntity) -> Unit) :
                     "Selesai"
                 }
                 itemEvent.setOnClickListener { view ->
-                    val toDetailFragment = UpcomingFragmentDirections.actionNavigationUpcomingToNavigationDetail()
+                    val toDetailFragment = FavoritedFragmentDirections.actionNavigationFavoritedToNavigationDetail()
                     if (id != null) {
                         toDetailFragment.id = id
                     }
@@ -81,17 +85,11 @@ class UpcomingEventAdapter(private val onFavoriteClick: (EventEntity) -> Unit) :
 
     companion object {
         val DIFF_CALLBACK: DiffUtil.ItemCallback<EventEntity> = object : DiffUtil.ItemCallback<EventEntity>() {
-            override fun areItemsTheSame(
-                oldItem: EventEntity,
-                newItem: EventEntity
-            ): Boolean {
+            override fun areItemsTheSame(oldItem: EventEntity, newItem: EventEntity): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(
-                oldItem: EventEntity,
-                newItem: EventEntity
-            ): Boolean {
+            override fun areContentsTheSame(oldItem: EventEntity, newItem: EventEntity): Boolean {
                 return oldItem == newItem
             }
         }

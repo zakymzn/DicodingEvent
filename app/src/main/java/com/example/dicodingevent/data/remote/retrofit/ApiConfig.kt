@@ -1,4 +1,4 @@
-package com.example.dicodingevent.data.retrofit
+package com.example.dicodingevent.data.remote.retrofit
 
 import com.example.dicodingevent.BuildConfig
 import okhttp3.OkHttpClient

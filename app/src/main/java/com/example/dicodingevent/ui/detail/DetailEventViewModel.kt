@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.example.dicodingevent.data.response.Event
-import com.example.dicodingevent.data.response.EventDetailResponse
-import com.example.dicodingevent.data.retrofit.ApiConfig
+import com.example.dicodingevent.data.remote.response.Event
+import com.example.dicodingevent.data.remote.response.EventDetailResponse
+import com.example.dicodingevent.data.remote.retrofit.ApiConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback

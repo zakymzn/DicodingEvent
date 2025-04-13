@@ -41,4 +41,9 @@
     <string name="oleh">oleh %1$s</string>
     <string name="description_event_not_found">Event not found</string>
     <string name="text_event_not_found">Event yang Anda cari tidak ditemukan</string>
+    <string name="title_favorited">Favorited</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="description_no_favorited_events">No Favorited Events</string>
+    <string name="text_no_favorited_events">Belum ada event favoritmu</string>
 </resources>

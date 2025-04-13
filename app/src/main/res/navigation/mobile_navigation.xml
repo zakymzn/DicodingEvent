@@ -16,6 +16,16 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.example.dicodingevent.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_detail"
+            app:destination="@id/navigation_detail" />
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_upcoming"
         android:name="com.example.dicodingevent.ui.upcoming.UpcomingFragment"
         android:label="@string/title_upcoming"
@@ -36,6 +46,16 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_favorited"
+        android:name="com.example.dicodingevent.ui.favorited.FavoritedFragment"
+        android:label="@string/title_favorited"
+        tools:layout="@layout/fragment_favorited" >
+        <action
+            android:id="@+id/action_navigation_favorited_to_navigation_detail"
+            app:destination="@id/navigation_detail" />
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_detail"
         android:name="com.example.dicodingevent.ui.detail.DetailFragment"
         android:label="@string/title_detail"
@@ -44,15 +64,5 @@
             android:name="id"
             app:argType="integer"
             android:defaultValue="0" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_search"
-        android:name="com.example.dicodingevent.ui.search.SearchFragment"
-        android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" >
-        <action
-            android:id="@+id/action_navigation_search_to_navigation_detail"
-            app:destination="@id/navigation_detail" />
     </fragment>
 </navigation>

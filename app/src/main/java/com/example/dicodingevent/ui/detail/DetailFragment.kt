@@ -20,7 +20,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.dicodingevent.R
 import com.example.dicodingevent.databinding.FragmentDetailBinding
-import com.example.dicodingevent.data.response.Event
+import com.example.dicodingevent.data.remote.response.Event
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime

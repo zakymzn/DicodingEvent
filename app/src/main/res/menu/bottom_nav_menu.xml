@@ -21,4 +21,9 @@
         android:icon="@drawable/baseline_done_outline_24"
         android:title="@string/title_finished"/>
 
+    <item
+        android:id="@+id/navigation_favorited"
+        android:icon="@drawable/baseline_favorite_border_24"
+        android:title="@string/title_favorited"/>
+
 </menu>

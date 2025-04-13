@@ -4,23 +4,22 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dicodingevent.R
-import com.example.dicodingevent.data.response.ListEventsItem
+import com.example.dicodingevent.data.local.entity.EventEntity
+import com.example.dicodingevent.data.remote.response.ListEventsItem
 import com.example.dicodingevent.databinding.ItemEventBinding
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
-class SearchEventAdapter : ListAdapter<ListEventsItem, SearchEventAdapter.MyViewHolder>(DIFF_CALLBACK) {
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): MyViewHolder {
+class SearchEventAdapter(private val onFavoriteClick: (EventEntity) -> Unit) : ListAdapter<EventEntity, SearchEventAdapter.MyViewHolder>(DIFF_CALLBACK) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemEventBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
@@ -29,11 +28,21 @@ class SearchEventAdapter : ListAdapter<ListEventsItem, SearchEventAdapter.MyView
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val event = getItem(position)
         holder.bind(event)
+
+        val ibFavorite = holder.binding.ibFavorite
+        if (event.isFavorited) {
+            ibFavorite.setImageDrawable(ContextCompat.getDrawable(ibFavorite.context, R.drawable.baseline_favorite_24))
+        } else {
+            ibFavorite.setImageDrawable(ContextCompat.getDrawable(ibFavorite.context, R.drawable.baseline_favorite_border_24))
+        }
+        ibFavorite.setOnClickListener {
+            onFavoriteClick(event)
+        }
     }
 
     class MyViewHolder(val binding: ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
         @RequiresApi(Build.VERSION_CODES.O)
-        fun bind(event: ListEventsItem) {
+        fun bind(event: EventEntity) {
             val today = LocalDateTime.now()
             val parsedDateTime = LocalDateTime.parse(event.beginTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
@@ -69,17 +78,17 @@ class SearchEventAdapter : ListAdapter<ListEventsItem, SearchEventAdapter.MyView
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListEventsItem>() {
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<EventEntity> = object : DiffUtil.ItemCallback<EventEntity>() {
             override fun areItemsTheSame(
-                oldItem: ListEventsItem,
-                newItem: ListEventsItem
+                oldItem: EventEntity,
+                newItem: EventEntity
             ): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: ListEventsItem,
-                newItem: ListEventsItem
+                oldItem: EventEntity,
+                newItem: EventEntity
             ): Boolean {
                 return oldItem == newItem
             }

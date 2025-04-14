@@ -15,10 +15,15 @@ import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavArgs
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.dicodingevent.R
+import com.example.dicodingevent.data.Result
+import com.example.dicodingevent.data.local.entity.EventEntity
 import com.example.dicodingevent.databinding.FragmentDetailBinding
 import com.example.dicodingevent.data.remote.response.Event
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -31,10 +36,10 @@ import java.time.temporal.ChronoUnit
 class DetailFragment : Fragment() {
 
     private var _binding: FragmentDetailBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun getDetailEventData(event: Event) {
+    private fun getDetailEventData(event: EventEntity) {
         val today = LocalDateTime.now()
 
         val parsedBeginTime = LocalDateTime.parse(event.beginTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
@@ -47,8 +52,8 @@ class DetailFragment : Fragment() {
 
         Glide.with(this)
             .load(event.mediaCover)
-            .into(binding.ivMediaCover)
-        binding.apply {
+            .into(binding?.ivMediaCover!!)
+        binding?.apply {
             tvName.text = "${event.name}"
             tvOwner.text = getString(R.string.diselenggarakan_oleh, event.ownerName)
             tvCategory.text = "${event.category}"
@@ -60,7 +65,7 @@ class DetailFragment : Fragment() {
         }
 
         if (ChronoUnit.MINUTES.between(today, parsedBeginTime) > 0) {
-            binding.apply {
+            binding?.apply {
                 tvEventFinished.visibility = View.GONE
                 efabRegister.visibility = View.VISIBLE
                 efabSeeWebPage.visibility = View.GONE
@@ -71,7 +76,7 @@ class DetailFragment : Fragment() {
                 }
             }
         } else {
-            binding.apply {
+            binding?.apply {
                 tvEndTime.setTextColor(ContextCompat.getColor(requireContext(), R.color.soft_red))
                 tvEventFinished.visibility = View.VISIBLE
                 efabRegister.visibility = View.GONE
@@ -83,36 +88,61 @@ class DetailFragment : Fragment() {
                 }
             }
         }
-    }
 
-    private fun showLoading(isLoading: Boolean) {
-        binding.apply {
-            pbDetailEvent.visibility = if (isLoading) View.VISIBLE else View.GONE
-            clDetailEvent.visibility = if (isLoading) View.GONE else View.VISIBLE
+        println("Is event favorited? = " + event.isFavorited)
+        if (event.isFavorited) {
+            binding?.fabFavorite?.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.baseline_favorite_24))
+        } else {
+            binding?.fabFavorite?.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.baseline_favorite_border_24))
         }
-    }
-
-    private fun showErrorMessage(errorMessage: String) {
-        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        return root
+        return binding?.root
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val toolbar: Toolbar = binding.toolbar
-        val detailEventViewModel = ViewModelProvider(this)[DetailEventViewModel::class.java]
+        val toolbar: Toolbar = binding?.toolbar!!
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+        val detailEventViewModel: DetailEventViewModel by viewModels()
+
+        detailEventViewModel.getDetailEvent().observe(viewLifecycleOwner) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> {
+                        binding?.pbDetailEvent?.visibility = View.VISIBLE
+                        binding?.clDetailEvent?.visibility = View.GONE
+                    }
+
+                    is Result.Success -> {
+                        binding?.pbDetailEvent?.visibility = View.GONE
+                        binding?.clDetailEvent?.visibility = View.VISIBLE
+                        val event = result.data
+                        getDetailEventData(event)
+                        binding?.fabFavorite?.setOnClickListener {
+                            if (event.isFavorited) {
+                                detailEventViewModel.deleteEvent(event)
+                            } else {
+                                detailEventViewModel.saveEvent(event)
+                            }
+                        }
+                    }
+
+                    is Result.Error -> {
+                        binding?.pbDetailEvent?.visibility = View.GONE
+                        Toast.makeText(context, "Error: " + result.error, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
 
         toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
@@ -122,20 +152,6 @@ class DetailFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback {
             findNavController().navigateUp()
             bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
-        }
-
-        detailEventViewModel.detailEvent.observe(viewLifecycleOwner) {event ->
-            if (event != null) {
-                getDetailEventData(event)
-            }
-        }
-
-        detailEventViewModel.isLoading.observe(viewLifecycleOwner) {
-            showLoading(it)
-        }
-
-        detailEventViewModel.errorMessage.observe(viewLifecycleOwner) {
-            showErrorMessage(it)
         }
 
         if (bottomNavigationView == null) {

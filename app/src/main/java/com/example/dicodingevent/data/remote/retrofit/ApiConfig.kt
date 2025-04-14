@@ -11,7 +11,6 @@ class ApiConfig {
         const val BASE_URL = BuildConfig.BASE_URL
 
         fun getApiService(): ApiService {
-//            val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             val loggingInterceptor = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             } else {
@@ -21,7 +20,7 @@ class ApiConfig {
                 .addInterceptor(loggingInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://event-api.dicoding.dev/")
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

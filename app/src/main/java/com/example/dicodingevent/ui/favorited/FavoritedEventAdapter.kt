@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide
 import com.example.dicodingevent.R
 import com.example.dicodingevent.data.local.entity.EventEntity
 import com.example.dicodingevent.databinding.ItemEventBinding
-import com.example.dicodingevent.ui.upcoming.UpcomingFragmentDirections
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit

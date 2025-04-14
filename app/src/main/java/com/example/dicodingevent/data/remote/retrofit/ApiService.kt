@@ -1,7 +1,6 @@
 package com.example.dicodingevent.data.remote.retrofit
 import com.example.dicodingevent.data.remote.response.EventDetailResponse
 import com.example.dicodingevent.data.remote.response.EventListResponse
-import retrofit2.Call
 import retrofit2.http.*
 
 interface ApiService {

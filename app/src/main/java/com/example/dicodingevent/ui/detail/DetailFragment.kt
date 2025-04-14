@@ -1,7 +1,6 @@
 package com.example.dicodingevent.ui.detail
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -16,21 +15,18 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.dicodingevent.R
 import com.example.dicodingevent.data.Result
 import com.example.dicodingevent.data.local.entity.EventEntity
 import com.example.dicodingevent.databinding.FragmentDetailBinding
-import com.example.dicodingevent.data.remote.response.Event
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -71,7 +67,7 @@ class DetailFragment : Fragment() {
                 efabSeeWebPage.visibility = View.GONE
                 efabRegister.setOnClickListener {
                     val urlIntent = Intent(Intent.ACTION_VIEW)
-                    urlIntent.data = Uri.parse(event.link)
+                    urlIntent.data = event.link?.toUri()
                     startActivity(urlIntent)
                 }
             }
@@ -83,7 +79,7 @@ class DetailFragment : Fragment() {
                 efabSeeWebPage.visibility = View.VISIBLE
                 efabSeeWebPage.setOnClickListener {
                     val urlIntent = Intent(Intent.ACTION_VIEW)
-                    urlIntent.data = Uri.parse(event.link)
+                    urlIntent.data = event.link?.toUri()
                     startActivity(urlIntent)
                 }
             }
@@ -146,12 +142,12 @@ class DetailFragment : Fragment() {
 
         toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
-            bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
+            bottomNavigationView.animate()?.translationY(0f)?.duration = 200
         }
 
         requireActivity().onBackPressedDispatcher.addCallback {
             findNavController().navigateUp()
-            bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
+            bottomNavigationView.animate()?.translationY(0f)?.duration = 200
         }
 
         if (bottomNavigationView == null) {
@@ -159,7 +155,7 @@ class DetailFragment : Fragment() {
             return
         }
 
-        bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
+        bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.duration = 200
     }
 
     override fun onDestroyView() {

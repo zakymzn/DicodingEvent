@@ -8,12 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dicodingevent.R
 import com.example.dicodingevent.data.Result
-import com.example.dicodingevent.data.remote.response.ListEventsItem
 import com.example.dicodingevent.databinding.FragmentSearchBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -22,39 +20,12 @@ class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding
 
-//    private fun getSearchEventsData(eventsItem: List<ListEventsItem>) {
-//        val adapter = SearchEventAdapter()
-//        adapter.submitList(eventsItem)
-//        binding.rvSearchEvents.adapter = adapter
-//
-//        if (eventsItem.isEmpty()) {
-//            binding.apply {
-//                binding.ivEventNotFound.visibility = View.VISIBLE
-//                binding.tvEventNotFound.visibility = View.VISIBLE
-//            }
-//        } else {
-//            binding.apply {
-//                binding.ivEventNotFound.visibility = View.GONE
-//                binding.tvEventNotFound.visibility = View.GONE
-//            }
-//        }
-//    }
-//
-//    private fun showLoading(isLoading: Boolean) {
-//        binding.pbSearchEvents.visibility = if (isLoading) View.VISIBLE else View.GONE
-//    }
-//
-//    private fun showErrorMessage(errorMessage: String) {
-//        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-//        val root: View = binding.root
 
         return binding?.root
     }
@@ -81,8 +52,6 @@ class SearchFragment : Fragment() {
             }
         }
 
-//        val searchEventViewModel = ViewModelProvider(this)[SearchEventViewModel::class.java]
-
         searchBar?.setOnClickListener {
             searchView?.show()
         }
@@ -92,7 +61,6 @@ class SearchFragment : Fragment() {
             searchBar?.setText(searchView.text)
             val query = searchView.text
             if (query.isNotEmpty()) {
-//                searchEventViewModel.searchEvent(query.toString())
                 searchEventViewModel.searchEvent(query.toString()).observe(viewLifecycleOwner) { result ->
                     if (result != null) {
                         when (result) {
@@ -134,18 +102,6 @@ class SearchFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireActivity())
             adapter = searchEventAdapter
         }
-//        searchEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
-//            binding.rvSearchEvents.layoutManager = LinearLayoutManager(requireActivity())
-//            getSearchEventsData(eventsItem)
-//        }
-//
-//        searchEventViewModel.isLoading.observe(viewLifecycleOwner) {
-//            showLoading(it)
-//        }
-//
-//        searchEventViewModel.errorMessage.observe(viewLifecycleOwner) {
-//            showErrorMessage(it)
-//        }
 
         if (bottomNavigationView == null) {
             Log.e("SearchFragment", "BottomNavigationView is null")

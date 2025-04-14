@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dicodingevent.R
 import com.example.dicodingevent.data.local.entity.EventEntity
-import com.example.dicodingevent.data.remote.response.ListEventsItem
 import com.example.dicodingevent.databinding.ItemEventBinding
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

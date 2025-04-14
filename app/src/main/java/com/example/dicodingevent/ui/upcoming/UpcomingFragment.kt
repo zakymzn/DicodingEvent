@@ -22,35 +22,12 @@ class UpcomingFragment : Fragment() {
     private var _binding: FragmentUpcomingBinding? = null
     private val binding get() = _binding
 
-//    private fun getUpcomingEventsData(eventsItem: List<ListEventsItem>) {
-//        val adapter = UpcomingEventAdapter()
-//        adapter.submitList(eventsItem)
-//        binding.rvUpcomingEvents.adapter = adapter
-//
-//        if (eventsItem.isEmpty()) {
-//            binding.ivIllustration.visibility = View.VISIBLE
-//            binding.tvNoUpcomingEvent.visibility = View.VISIBLE
-//        } else {
-//            binding.ivIllustration.visibility = View.GONE
-//            binding.tvNoUpcomingEvent.visibility = View.GONE
-//        }
-//    }
-//
-//    private fun showLoading(isLoading: Boolean) {
-//        binding.pbUpcomingEvents.visibility = if (isLoading) View.VISIBLE else View.GONE
-//    }
-//
-//    private fun showErrorMessage(errorMessage: String) {
-//        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentUpcomingBinding.inflate(inflater, container, false)
-//        val root: View = binding.root
 
         return binding?.root
     }
@@ -108,20 +85,6 @@ class UpcomingFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireActivity())
             adapter = upcomingEventAdapter
         }
-//        val upcomingEventViewModel = ViewModelProvider(this)[UpcomingEventViewModel::class.java]
-//
-//        upcomingEventViewModel.listEvents.observe(viewLifecycleOwner) {eventsItem ->
-//            binding.rvUpcomingEvents.layoutManager = LinearLayoutManager(requireActivity())
-//            getUpcomingEventsData(eventsItem)
-//        }
-//
-//        upcomingEventViewModel.isLoading.observe(viewLifecycleOwner) {
-//            showLoading(it)
-//        }
-//
-//        upcomingEventViewModel.errorMessage.observe(viewLifecycleOwner) {
-//            showErrorMessage(it)
-//        }
 
         if (bottomNavigationView == null) {
             Log.e("UpcomingFragment", "BottomNavigationView is null")

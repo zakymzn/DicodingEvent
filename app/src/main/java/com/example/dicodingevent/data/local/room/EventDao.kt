@@ -7,7 +7,19 @@ import com.example.dicodingevent.data.local.entity.EventEntity
 @Dao
 interface EventDao {
     @Query("SELECT * FROM event ORDER BY id DESC")
-    fun getEvents(): LiveData<List<EventEntity>>
+    fun getAllEvents(): LiveData<List<EventEntity>>
+
+    @Query("SELECT * FROM event WHERE DATETIME('now') < endTime ORDER BY id DESC LIMIT 5")
+    fun getFiveUpcomingEvents(): LiveData<List<EventEntity>>
+
+    @Query("SELECT * FROM event WHERE DATETIME('now') < endTime ORDER BY id DESC")
+    fun getUpcomingEvents(): LiveData<List<EventEntity>>
+
+    @Query("SELECT * FROM event WHERE DATETIME('now') >= endTime ORDER BY id DESC LIMIT 5")
+    fun getFiveFinishedEvents(): LiveData<List<EventEntity>>
+
+    @Query("SELECT * FROM event WHERE DATETIME('now') >= endTime ORDER BY id DESC")
+    fun getFinishedEvents(): LiveData<List<EventEntity>>
 
     @Query("SELECT * FROM event WHERE id = :id")
     fun getDetailEvent(id: Int?): LiveData<EventEntity>

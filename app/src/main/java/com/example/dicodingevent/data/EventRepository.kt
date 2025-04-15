@@ -46,7 +46,7 @@ class EventRepository @Inject constructor(
             Log.d("EventRepository", "getUpcomingEvent: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))
         }
-        val localData: LiveData<Result<List<EventEntity>>> = eventDao.getEvents().map { Result.Success(it) }
+        val localData: LiveData<Result<List<EventEntity>>> = eventDao.getFiveUpcomingEvents().map { Result.Success(it) }
         emitSource(localData)
     }
 
@@ -81,7 +81,7 @@ class EventRepository @Inject constructor(
             Log.d("EventRepository", "getFinishedEvent: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))
         }
-        val localData: LiveData<Result<List<EventEntity>>> = eventDao.getEvents().map { Result.Success(it) }
+        val localData: LiveData<Result<List<EventEntity>>> = eventDao.getFiveFinishedEvents().map { Result.Success(it) }
         emitSource(localData)
     }
 
@@ -116,7 +116,7 @@ class EventRepository @Inject constructor(
             Log.d("EventRepository", "getUpcomingEvent: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))
         }
-        val localData: LiveData<Result<List<EventEntity>>> = eventDao.getEvents().map { Result.Success(it) }
+        val localData: LiveData<Result<List<EventEntity>>> = eventDao.getUpcomingEvents().map { Result.Success(it) }
         emitSource(localData)
     }
 
@@ -151,7 +151,7 @@ class EventRepository @Inject constructor(
             Log.d("EventRepository", "getFinishedEvent: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))
         }
-        val localData: LiveData<Result<List<EventEntity>>> = eventDao.getEvents().map { Result.Success(it) }
+        val localData: LiveData<Result<List<EventEntity>>> = eventDao.getFinishedEvents().map { Result.Success(it) }
         emitSource(localData)
     }
 
@@ -186,7 +186,7 @@ class EventRepository @Inject constructor(
             Log.d("EventRepository", "getAllEvent: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))
         }
-        val localData: LiveData<Result<List<EventEntity>>> = eventDao.getEvents().map { Result.Success(it) }
+        val localData: LiveData<Result<List<EventEntity>>> = eventDao.getAllEvents().map { Result.Success(it) }
         emitSource(localData)
     }
 
@@ -221,7 +221,7 @@ class EventRepository @Inject constructor(
             Log.d("EventRepository", "searchEvent: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))
         }
-        val localData: LiveData<Result<List<EventEntity>>> = eventDao.getEvents().map { Result.Success(it) }
+        val localData: LiveData<Result<List<EventEntity>>> = eventDao.getAllEvents().map { Result.Success(it) }
         emitSource(localData)
     }
 

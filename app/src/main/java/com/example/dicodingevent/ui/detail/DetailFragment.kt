@@ -85,7 +85,6 @@ class DetailFragment : Fragment() {
             }
         }
 
-        println("Is event favorited? = " + event.isFavorited)
         if (event.isFavorited) {
             binding?.fabFavorite?.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.baseline_favorite_24))
         } else {

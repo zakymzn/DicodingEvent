@@ -54,6 +54,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.preference)
+    implementation(libs.androidx.activity)
     implementation(libs.glide)
     implementation(libs.androidx.viewpager2)
     implementation(libs.androidx.legacy.support.v4)
@@ -81,6 +83,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.room.ktx)
 
+    // datastore
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 }
 
 // Allow references to generate code

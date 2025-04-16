@@ -1,5 +1,6 @@
 package com.example.dicodingevent.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingevent.R
 import com.example.dicodingevent.data.Result
 import com.example.dicodingevent.databinding.FragmentHomeBinding
+import com.example.dicodingevent.ui.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeFragment : Fragment() {
@@ -33,10 +35,22 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val toolbar = binding?.toolbar
         val nestedScrollView = binding?.nsvHome
         val rvHomeUpcomingEvents = binding?.rvHomeUpcomingEvents
         val rvHomeFinishedEvents = binding?.rvHomeFinishedEvents
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+
+        toolbar?.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.settings -> {
+                    val intent = Intent(requireActivity(), SettingsActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
 
         val homeUpcomingEventViewModelFactory: HomeUpcomingEventViewModelFactory = HomeUpcomingEventViewModelFactory.getInstance(requireActivity())
         val homeFinishedEventViewModelFactory: HomeFinishedEventViewModelFactory = HomeFinishedEventViewModelFactory.getInstance(requireActivity())

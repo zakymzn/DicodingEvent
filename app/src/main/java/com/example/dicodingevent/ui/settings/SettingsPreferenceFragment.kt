@@ -18,6 +18,10 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat() {
 
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
 
+        if (bottomNavigationView == null) {
+            Log.e("SettingsPreferenceFragment", "BottomNavigationView is null")
+        }
+
         val key = getString(R.string.key_dark_theme)
         val switchThemePreference = findPreference<SwitchPreferenceCompat>(key)
         val preferences = SettingsPreferences.getInstance(requireContext().dataStore)
@@ -29,9 +33,11 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat() {
             if (isDarkThemeActive) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 switchThemePreference?.isChecked = true
+                bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.duration = 0
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 switchThemePreference?.isChecked = false
+                bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.duration = 0
             }
         }
 
@@ -48,12 +54,5 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat() {
             requireActivity().finish()
             true
         }
-
-        if (bottomNavigationView == null) {
-            Log.e("SettingsPreferenceFragment", "BottomNavigationView is null")
-            return
-        }
-
-        bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.duration = 200
     }
 }

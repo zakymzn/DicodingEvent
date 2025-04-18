@@ -105,7 +105,7 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val toolbar: Toolbar = binding?.toolbar!!
+        val toolbar = binding?.toolbar
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
         val detailEventViewModel: DetailEventViewModel by viewModels()
 
@@ -139,7 +139,7 @@ class DetailFragment : Fragment() {
             }
         }
 
-        toolbar.setNavigationOnClickListener {
+        toolbar?.setNavigationOnClickListener {
             findNavController().navigateUp()
             bottomNavigationView.animate()?.translationY(0f)?.duration = 200
         }

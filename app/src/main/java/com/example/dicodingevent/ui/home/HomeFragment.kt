@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingevent.R
 import com.example.dicodingevent.data.Result
 import com.example.dicodingevent.databinding.FragmentHomeBinding
-import com.example.dicodingevent.ui.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeFragment : Fragment() {
@@ -44,8 +44,8 @@ class HomeFragment : Fragment() {
         toolbar?.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.settings -> {
-                    val intent = Intent(requireActivity(), SettingsActivity::class.java)
-                    startActivity(intent)
+                    val toSettingsPreferenceFragment = HomeFragmentDirections.actionNavigationHomeToNavigationSettings()
+                    view.findNavController().navigate(toSettingsPreferenceFragment)
                     true
                 }
                 else -> false

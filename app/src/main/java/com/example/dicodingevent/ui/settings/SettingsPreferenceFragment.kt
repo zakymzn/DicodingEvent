@@ -1,48 +1,59 @@
 package com.example.dicodingevent.ui.settings
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
+import com.example.dicodingevent.MainActivity
 import com.example.dicodingevent.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SettingsPreferenceFragment : PreferenceFragmentCompat() {
-
-    private lateinit var settingsViewModel: SettingsViewModel
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
+        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+
+        val key = getString(R.string.key_dark_theme)
+        val switchThemePreference = findPreference<SwitchPreferenceCompat>(key)
         val preferences = SettingsPreferences.getInstance(requireContext().dataStore)
         val settingsViewModelFactory = SettingsViewModelFactory(preferences)
 
-        settingsViewModel = ViewModelProvider(this, settingsViewModelFactory)[SettingsViewModel::class.java]
+        val settingsViewModel = ViewModelProvider(this, settingsViewModelFactory)[SettingsViewModel::class.java]
 
-        val key = getString(R.string.key_dark_theme)
-        val darkThemePreference = findPreference<SwitchPreferenceCompat>(key)
-
-        viewLifecycleOwnerLiveData.observe(this) { owner ->
-            settingsViewModel.getThemeSettings().observe(owner) { isDarkThemeActive ->
-                if (darkThemePreference?.isChecked != isDarkThemeActive) {
-                    darkThemePreference?.isChecked = isDarkThemeActive
-                }
+        settingsViewModel.getThemeSettings().observe(this) { isDarkThemeActive: Boolean ->
+            if (isDarkThemeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                switchThemePreference?.isChecked = true
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                switchThemePreference?.isChecked = false
             }
         }
 
-        darkThemePreference?.setOnPreferenceChangeListener { _, newValue ->
-            val isDarkTheme = newValue as Boolean
+        switchThemePreference?.setOnPreferenceChangeListener { _, isChecked ->
+            val isDarkTheme = isChecked as Boolean
             settingsViewModel.saveThemeSettings(isDarkTheme)
 
-            val mode = if (isDarkTheme) {
-                AppCompatDelegate.MODE_NIGHT_YES
-            } else {
-                AppCompatDelegate.MODE_NIGHT_NO
+            val context = requireContext()
+            val intent = Intent(context, MainActivity::class.java).apply {
+                putExtra("navigate_to_settings", true)
             }
-
-            AppCompatDelegate.setDefaultNightMode(mode)
-            requireActivity().recreate()
+            startActivity(intent)
+            requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+            requireActivity().finish()
             true
         }
+
+        if (bottomNavigationView == null) {
+            Log.e("SettingsPreferenceFragment", "BottomNavigationView is null")
+            return
+        }
+
+        bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.duration = 200
     }
 }

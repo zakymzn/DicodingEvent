@@ -9,10 +9,15 @@ import android.os.Bundle
 import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.dicodingevent.databinding.ActivityMainBinding
+import com.example.dicodingevent.ui.settings.SettingsPreferences
+import com.example.dicodingevent.ui.settings.dataStore
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -42,15 +47,36 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val preferences = SettingsPreferences.getInstance(dataStore)
+        val isDarkTheme = runBlocking { preferences.getThemeSetting().first() }
+
+        AppCompatDelegate.setDefaultNightMode(
+            if (isDarkTheme) {
+                AppCompatDelegate.MODE_NIGHT_YES
+            } else {
+                AppCompatDelegate.MODE_NIGHT_NO
+            }
+        )
+
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navView: BottomNavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        if (savedInstanceState == null) {
+            val navView: BottomNavigationView = binding.navView
+            val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
-        navView.setupWithNavController(navController)
+            navView.setupWithNavController(navController)
+
+            val navigateToSettings = intent.getBooleanExtra("navigate_to_settings", false)
+            if (navigateToSettings) {
+                navController.navigate(R.id.navigation_settings)
+                navView.selectedItemId = R.id.navigation_settings
+
+                intent.removeExtra("navigate_to_settings")
+            }
+        }
     }
 
     override fun onStart() {

@@ -1,6 +1,5 @@
 package com.example.dicodingevent.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -52,34 +51,43 @@ class HomeFragment : Fragment() {
             }
         }
 
-        val homeUpcomingEventViewModelFactory: HomeUpcomingEventViewModelFactory = HomeUpcomingEventViewModelFactory.getInstance(requireActivity())
-        val homeFinishedEventViewModelFactory: HomeFinishedEventViewModelFactory = HomeFinishedEventViewModelFactory.getInstance(requireActivity())
+        val homeEventViewModelFactory: HomeEventViewModelFactory = HomeEventViewModelFactory.getInstance(requireActivity())
+//        val homeUpcomingEventViewModelFactory: HomeUpcomingEventViewModelFactory = HomeUpcomingEventViewModelFactory.getInstance(requireActivity())
+//        val homeFinishedEventViewModelFactory: HomeFinishedEventViewModelFactory = HomeFinishedEventViewModelFactory.getInstance(requireActivity())
 
-        val homeUpcomingEventViewModel: HomeUpcomingEventViewModel by viewModels {
-            homeUpcomingEventViewModelFactory
+        val homeEventViewModel: HomeEventViewModel by viewModels {
+            homeEventViewModelFactory
         }
 
-        val homeFinishedEventViewModel: HomeFinishedEventViewModel by viewModels {
-            homeFinishedEventViewModelFactory
-        }
+//        val homeUpcomingEventViewModel: HomeUpcomingEventViewModel by viewModels {
+//            homeUpcomingEventViewModelFactory
+//        }
+//
+//        val homeFinishedEventViewModel: HomeFinishedEventViewModel by viewModels {
+//            homeFinishedEventViewModelFactory
+//        }
 
         val homeUpcomingEventAdapter = HomeUpcomingEventAdapter { event ->
             if (event.isFavorited) {
-                homeUpcomingEventViewModel.deleteEvent(event)
+//                homeUpcomingEventViewModel.deleteEvent(event)
+                homeEventViewModel.deleteEvent(event)
             } else {
-                homeUpcomingEventViewModel.saveEvent(event)
+//                homeUpcomingEventViewModel.saveEvent(event)
+                homeEventViewModel.saveEvent(event)
             }
         }
 
         val homeFinishedEventAdapter = HomeFinishedEventAdapter { event ->
             if (event.isFavorited) {
-                homeFinishedEventViewModel.deleteEvent(event)
+//                homeFinishedEventViewModel.deleteEvent(event)
+                homeEventViewModel.deleteEvent(event)
             } else {
-                homeFinishedEventViewModel.saveEvent(event)
+//                homeFinishedEventViewModel.saveEvent(event)
+                homeEventViewModel.saveEvent(event)
             }
         }
 
-        homeUpcomingEventViewModel.getHomeUpcomingEvent().observe(viewLifecycleOwner) { result ->
+        homeEventViewModel.getHomeUpcomingEvent().observe(viewLifecycleOwner) { result ->
             if (result != null) {
                 when (result) {
                     is Result.Loading -> {
@@ -112,7 +120,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        homeFinishedEventViewModel.getHomeFinishedEvent().observe(viewLifecycleOwner) { result ->
+        homeEventViewModel.getHomeFinishedEvent().observe(viewLifecycleOwner) { result ->
             if (result != null) {
                 when (result) {
                     is Result.Loading -> {

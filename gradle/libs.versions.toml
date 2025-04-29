@@ -1,10 +1,12 @@
 [versions]
-agp = "8.9.1"
-datastorePreferences = "1.1.4"
+agp = "8.9.2"
+androidAsyncHttp = "1.4.10"
+datastorePreferences = "1.1.5"
 glide = "4.16.0"
 hiltAndroid = "2.51.1"
+hiltWork = "1.2.0"
 kotlin = "2.0.21"
-coreKtx = "1.15.0"
+coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -21,23 +23,31 @@ navigationSafeArgsGradlePlugin = "2.8.9"
 navigationUiKtx = "2.8.9"
 pagingRuntime = "3.3.6"
 retrofit = "2.9.0"
-roomCompiler = "2.6.1"
-roomRuntime = "2.6.1"
-roomKtx = "2.6.1"
-viewpager2 = "1.0.0"
+roomCompiler = "2.7.1"
+roomRuntime = "2.7.1"
+roomKtx = "2.7.1"
+viewpager2 = "1.1.0"
 legacySupportV4 = "1.0.0"
 preference = "1.2.1"
 activity = "1.10.1"
+workRuntime = "2.10.1"
+moshiKotlin = "1.11.0"
+moshiKotlinCodegen = "1.15.1"
+workRuntimeKtx = "2.10.1"
 
 [libraries]
+android-async-http = { module = "com.loopj.android:android-async-http", version.ref = "androidAsyncHttp" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hiltWork" }
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
 androidx-lifecycle-extensions = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "lifecycleExtensions" }
 androidx-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationSafeArgsGradlePlugin" }
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
+androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "workRuntime" }
+androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesCore" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
@@ -60,6 +70,8 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
 androidx-preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshiKotlin" }
+moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshiKotlinCodegen" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

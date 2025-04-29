@@ -62,7 +62,9 @@ dependencies {
 
     // dagger
     implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.work)
     kapt(libs.hilt.android.compiler)
+    kapt(libs.androidx.work.runtime.ktx)
 
     // testing
     testImplementation(libs.junit)
@@ -87,6 +89,14 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
+
+    // workmanager
+    implementation(libs.androidx.work.runtime)
+    implementation(libs.android.async.http)
+
+    // moshi
+    implementation(libs.moshi.kotlin)
+    ksp(libs.moshi.kotlin.codegen)
 }
 
 // Allow references to generate code

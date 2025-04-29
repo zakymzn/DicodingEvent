@@ -19,14 +19,27 @@ class SettingsPreferences private constructor(private val dataStore: DataStore<P
         }
     }
 
+    fun getNotificationSetting(): Flow<Boolean> {
+        return dataStore.data.map { preferences ->
+            preferences[NOTIFICATION_KEY] ?: false
+        }
+    }
+
     suspend fun saveThemeSetting(isDarkModeActive: Boolean) {
         dataStore.edit { preferences ->
             preferences[THEME_KEY] = isDarkModeActive
         }
     }
 
+    suspend fun saveNotificationSetting(isNotificationActive: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[NOTIFICATION_KEY] = isNotificationActive
+        }
+    }
+
     companion object {
         private val THEME_KEY = booleanPreferencesKey("theme_setting")
+        private val NOTIFICATION_KEY = booleanPreferencesKey("notification_setting")
 
         @Volatile
         private var INSTANCE: SettingsPreferences? = null

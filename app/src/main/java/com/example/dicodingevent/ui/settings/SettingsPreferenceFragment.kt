@@ -119,7 +119,7 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat() {
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
         if (periodicWorkRequest == null) {
-            periodicWorkRequest = PeriodicWorkRequest.Builder(UpcomingEventWorker::class.java, 15, TimeUnit.MINUTES)
+            periodicWorkRequest = PeriodicWorkRequest.Builder(UpcomingEventWorker::class.java, 1, TimeUnit.DAYS)
                 .setConstraints(constraints)
                 .addTag(WORKER_TAG)
                 .build()

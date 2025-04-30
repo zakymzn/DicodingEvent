@@ -52,37 +52,23 @@ class HomeFragment : Fragment() {
         }
 
         val homeEventViewModelFactory: HomeEventViewModelFactory = HomeEventViewModelFactory.getInstance(requireActivity())
-//        val homeUpcomingEventViewModelFactory: HomeUpcomingEventViewModelFactory = HomeUpcomingEventViewModelFactory.getInstance(requireActivity())
-//        val homeFinishedEventViewModelFactory: HomeFinishedEventViewModelFactory = HomeFinishedEventViewModelFactory.getInstance(requireActivity())
 
         val homeEventViewModel: HomeEventViewModel by viewModels {
             homeEventViewModelFactory
         }
 
-//        val homeUpcomingEventViewModel: HomeUpcomingEventViewModel by viewModels {
-//            homeUpcomingEventViewModelFactory
-//        }
-//
-//        val homeFinishedEventViewModel: HomeFinishedEventViewModel by viewModels {
-//            homeFinishedEventViewModelFactory
-//        }
-
         val homeUpcomingEventAdapter = HomeUpcomingEventAdapter { event ->
             if (event.isFavorited) {
-//                homeUpcomingEventViewModel.deleteEvent(event)
                 homeEventViewModel.deleteEvent(event)
             } else {
-//                homeUpcomingEventViewModel.saveEvent(event)
                 homeEventViewModel.saveEvent(event)
             }
         }
 
         val homeFinishedEventAdapter = HomeFinishedEventAdapter { event ->
             if (event.isFavorited) {
-//                homeFinishedEventViewModel.deleteEvent(event)
                 homeEventViewModel.deleteEvent(event)
             } else {
-//                homeFinishedEventViewModel.saveEvent(event)
                 homeEventViewModel.saveEvent(event)
             }
         }

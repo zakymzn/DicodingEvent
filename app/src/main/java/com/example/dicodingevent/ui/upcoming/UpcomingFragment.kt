@@ -42,13 +42,7 @@ class UpcomingFragment : Fragment() {
             upcomingEventViewModelFactory
         }
 
-        val upcomingEventAdapter = UpcomingEventAdapter { event ->
-            if (event.isFavorited) {
-                upcomingEventViewModel.deleteEvent(event)
-            } else {
-                upcomingEventViewModel.saveEvent(event)
-            }
-        }
+        val upcomingEventAdapter = UpcomingEventAdapter()
 
         upcomingEventViewModel.getUpcomingEvent().observe(viewLifecycleOwner) { result ->
             if (result != null) {
@@ -93,9 +87,10 @@ class UpcomingFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (dy > 0) {
-                    bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
+                    bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.duration =
+                        200
                 } else if (dy < 0) {
-                    bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
+                    bottomNavigationView.animate()?.translationY(0f)?.duration = 200
                 }
             }
         })

@@ -26,18 +26,14 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat() {
 
     private lateinit var workManager: WorkManager
     private var periodicWorkRequest: PeriodicWorkRequest? = null
-    private var hasHandledPermissionResult = false
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
-        if (!hasHandledPermissionResult) {
-            hasHandledPermissionResult = true
-            if (isGranted) {
-                Toast.makeText(requireActivity(), "Izin notifikasi diberikan", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireActivity(), "Izin notifikasi ditolak", Toast.LENGTH_SHORT).show()
-            }
+        if (isGranted) {
+            Toast.makeText(requireActivity(), "Izin notifikasi diberikan", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(requireActivity(), "Izin notifikasi ditolak", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -142,6 +138,6 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat() {
     }
 
     companion object {
-        private val WORKER_TAG = "event_worker"
+        private const val WORKER_TAG = "event_worker"
     }
 }

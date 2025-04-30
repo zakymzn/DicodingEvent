@@ -41,13 +41,7 @@ class FavoritedFragment : Fragment() {
             favoritedEventViewModelFactory
         }
 
-        val favoritedEventAdapter = FavoritedEventAdapter { event ->
-            if (event.isFavorited) {
-                favoritedEventViewModel.deleteEvent(event)
-            } else {
-                favoritedEventViewModel.saveEvent(event)
-            }
-        }
+        val favoritedEventAdapter = FavoritedEventAdapter()
 
         favoritedEventViewModel.getFavoritedEvent().observe(viewLifecycleOwner) { favoritedEvent ->
             binding?.pbFavoritedEvents?.visibility = View.GONE
@@ -76,9 +70,10 @@ class FavoritedFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (dy > 0) {
-                    bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
+                    bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.duration =
+                        200
                 } else if (dy < 0) {
-                    bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
+                    bottomNavigationView.animate()?.translationY(0f)?.duration = 200
                 }
             }
         })

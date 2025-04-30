@@ -4,7 +4,6 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -17,7 +16,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
-class FinishedEventAdapter(private val onFavoriteClick: (EventEntity) -> Unit) : ListAdapter<EventEntity, FinishedEventAdapter.MyViewHolder>(
+class FinishedEventAdapter : ListAdapter<EventEntity, FinishedEventAdapter.MyViewHolder>(
     DIFF_CALLBACK
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -29,16 +28,6 @@ class FinishedEventAdapter(private val onFavoriteClick: (EventEntity) -> Unit) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val event = getItem(position)
         holder.bind(event)
-
-        val ibFavorite = holder.binding.ibFavorite
-        if (event.isFavorited) {
-            ibFavorite.setImageDrawable(ContextCompat.getDrawable(ibFavorite.context, R.drawable.baseline_favorite_24))
-        } else {
-            ibFavorite.setImageDrawable(ContextCompat.getDrawable(ibFavorite.context, R.drawable.baseline_favorite_border_24))
-        }
-        ibFavorite.setOnClickListener {
-            onFavoriteClick(event)
-        }
     }
 
     class MyViewHolder(val binding: ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {

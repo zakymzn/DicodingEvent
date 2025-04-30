@@ -44,13 +44,7 @@ class SearchFragment : Fragment() {
             searchEventViewModelFactory
         }
 
-        val searchEventAdapter = SearchEventAdapter { event ->
-            if (event.isFavorited) {
-                searchEventViewModel.deleteEvent(event)
-            } else {
-                searchEventViewModel.saveEvent(event)
-            }
-        }
+        val searchEventAdapter = SearchEventAdapter()
 
         searchBar?.setOnClickListener {
             searchView?.show()
@@ -112,9 +106,10 @@ class SearchFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (dy > 0 ) {
-                    bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
+                    bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.duration =
+                        200
                 } else if (dy < 0) {
-                    bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
+                    bottomNavigationView.animate()?.translationY(0f)?.duration = 200
                 }
             }
         })

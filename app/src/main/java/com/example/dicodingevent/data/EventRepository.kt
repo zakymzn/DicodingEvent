@@ -155,41 +155,6 @@ class EventRepository @Inject constructor(
         emitSource(localData)
     }
 
-    fun getAllEvent(): LiveData<Result<List<EventEntity>>> = liveData {
-        emit(Result.Loading)
-        try {
-            val response = apiService.getEvents(ALL_EVENT, 40)
-            val events = response.listEvents
-            val eventList = events.map { event ->
-                val isFavorited = eventDao.isEventFavorited(event.id)
-                EventEntity(
-                    event.id,
-                    event.name,
-                    event.summary,
-                    event.mediaCover,
-                    event.registrants,
-                    event.imageLogo,
-                    event.link,
-                    event.description,
-                    event.ownerName,
-                    event.cityName,
-                    event.quota,
-                    event.beginTime,
-                    event.endTime,
-                    event.category,
-                    isFavorited
-                )
-            }
-            eventDao.deleteAll()
-            eventDao.insertEvent(eventList)
-        } catch (e: Exception) {
-            Log.d("EventRepository", "getAllEvent: ${e.message.toString()}")
-            emit(Result.Error(e.message.toString()))
-        }
-        val localData: LiveData<Result<List<EventEntity>>> = eventDao.getAllEvents().map { Result.Success(it) }
-        emitSource(localData)
-    }
-
     fun searchEvent(query: String): LiveData<Result<List<EventEntity>>> = liveData {
         emit(Result.Loading)
         try {

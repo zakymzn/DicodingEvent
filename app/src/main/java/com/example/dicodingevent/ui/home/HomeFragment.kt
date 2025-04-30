@@ -56,21 +56,8 @@ class HomeFragment : Fragment() {
             homeEventViewModelFactory
         }
 
-        val homeUpcomingEventAdapter = HomeUpcomingEventAdapter { event ->
-            if (event.isFavorited) {
-                homeEventViewModel.deleteEvent(event)
-            } else {
-                homeEventViewModel.saveEvent(event)
-            }
-        }
-
-        val homeFinishedEventAdapter = HomeFinishedEventAdapter { event ->
-            if (event.isFavorited) {
-                homeEventViewModel.deleteEvent(event)
-            } else {
-                homeEventViewModel.saveEvent(event)
-            }
-        }
+        val homeUpcomingEventAdapter = HomeUpcomingEventAdapter()
+        val homeFinishedEventAdapter = HomeFinishedEventAdapter()
 
         homeEventViewModel.getHomeUpcomingEvent().observe(viewLifecycleOwner) { result ->
             if (result != null) {
@@ -143,9 +130,10 @@ class HomeFragment : Fragment() {
 
         nestedScrollView?.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             if (scrollY > oldScrollY) {
-                bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.setDuration(200)
+                bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.duration =
+                    200
             } else if (scrollY < oldScrollY) {
-                bottomNavigationView.animate()?.translationY(0f)?.setDuration(200)
+                bottomNavigationView.animate()?.translationY(0f)?.duration = 200
             }
         }
     }

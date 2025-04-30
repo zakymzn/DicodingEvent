@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingevent.R
 import com.example.dicodingevent.data.Result
@@ -135,11 +134,6 @@ class HomeFragment : Fragment() {
         rvHomeFinishedEvents?.apply {
             layoutManager = LinearLayoutManager(requireActivity())
             adapter = homeFinishedEventAdapter
-        }
-
-        binding?.btTryAgain?.setOnClickListener {
-            findNavController().navigateUp()
-            findNavController().navigate(R.id.navigation_home)
         }
 
         if (bottomNavigationView == null) {

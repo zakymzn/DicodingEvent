@@ -123,9 +123,9 @@ class DetailFragment : Fragment() {
                         getDetailEventData(event)
                         binding?.fabFavorite?.setOnClickListener {
                             if (event.isFavorited) {
-                                detailEventViewModel.deleteEvent(event)
+                                detailEventViewModel.deleteFavoriteEvent(event)
                             } else {
-                                detailEventViewModel.saveEvent(event)
+                                detailEventViewModel.saveFavoriteEvent(event)
                             }
                         }
                     }

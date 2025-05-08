@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dicodingevent.R
-import com.example.dicodingevent.data.local.entity.EventEntity
+import com.example.dicodingevent.data.local.entity.FavoriteEventEntity
 import com.example.dicodingevent.databinding.ItemEventBinding
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import kotlin.ranges.contains
 
-class FavoritedEventAdapter : ListAdapter<EventEntity, FavoritedEventAdapter.MyViewHolder>(
+class FavoritedEventAdapter : ListAdapter<FavoriteEventEntity, FavoritedEventAdapter.MyViewHolder>(
     DIFF_CALLBACK
 ) {
     override fun onCreateViewHolder(
@@ -36,7 +36,7 @@ class FavoritedEventAdapter : ListAdapter<EventEntity, FavoritedEventAdapter.MyV
 
     class MyViewHolder(val binding: ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
         @RequiresApi(Build.VERSION_CODES.O)
-        fun bind(event: EventEntity) {
+        fun bind(event: FavoriteEventEntity) {
             val today = LocalDateTime.now()
             val parsedDateTime = LocalDateTime.parse(event.beginTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
@@ -72,12 +72,12 @@ class FavoritedEventAdapter : ListAdapter<EventEntity, FavoritedEventAdapter.MyV
     }
 
     companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<EventEntity> = object : DiffUtil.ItemCallback<EventEntity>() {
-            override fun areItemsTheSame(oldItem: EventEntity, newItem: EventEntity): Boolean {
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<FavoriteEventEntity> = object : DiffUtil.ItemCallback<FavoriteEventEntity>() {
+            override fun areItemsTheSame(oldItem: FavoriteEventEntity, newItem: FavoriteEventEntity): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: EventEntity, newItem: EventEntity): Boolean {
+            override fun areContentsTheSame(oldItem: FavoriteEventEntity, newItem: FavoriteEventEntity): Boolean {
                 return oldItem == newItem
             }
         }

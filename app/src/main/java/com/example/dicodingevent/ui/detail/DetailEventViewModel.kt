@@ -17,15 +17,17 @@ class DetailEventViewModel @Inject constructor(private val eventRepository: Even
 
     fun getDetailEvent() = eventRepository.getDetailEvent(eventId)
 
-    fun saveEvent(event: EventEntity) {
+    fun getFavoriteEventById(id: Int?) = eventRepository.getFavoritedEventById(id)
+
+    fun saveFavoriteEvent(event: EventEntity) {
         viewModelScope.launch {
-            eventRepository.setEventFavorite(event, true)
+            eventRepository.insertFavoriteEvent(event)
         }
     }
 
-    fun deleteEvent(event: EventEntity) {
+    fun deleteFavoriteEvent(event: EventEntity) {
         viewModelScope.launch {
-            eventRepository.setEventFavorite(event, false)
+            eventRepository.deleteFavoriteEvent(event)
         }
     }
 }

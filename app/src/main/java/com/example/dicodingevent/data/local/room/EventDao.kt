@@ -3,6 +3,7 @@ package com.example.dicodingevent.data.local.room
 import androidx.room.*
 import androidx.lifecycle.LiveData
 import com.example.dicodingevent.data.local.entity.EventEntity
+import com.example.dicodingevent.data.local.entity.FavoriteEventEntity
 
 @Dao
 interface EventDao {
@@ -24,8 +25,8 @@ interface EventDao {
     @Query("SELECT * FROM event WHERE id = :id")
     fun getDetailEvent(id: Int?): LiveData<EventEntity>
 
-    @Query("SELECT * FROM event WHERE favorited = 1")
-    fun getFavoritedEvent(): LiveData<List<EventEntity>>
+    @Query("SELECT * FROM favorite_event")
+    fun getFavoritedEvent(): LiveData<List<FavoriteEventEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertEvent(event: List<EventEntity>)
@@ -44,4 +45,13 @@ interface EventDao {
 
     @Query("SELECT EXISTS(SELECT * FROM event WHERE id = :id AND favorited = 1)")
     suspend fun isEventFavorited(id: Int?): Boolean
+
+    @Query("SELECT * FROM favorite_event WHERE id = :id")
+    fun getFavoriteEventById(id: Int?): LiveData<FavoriteEventEntity>
+
+    @Insert
+    suspend fun insertFavoriteEvent(favoriteEvent: FavoriteEventEntity)
+
+    @Delete
+    suspend fun deleteFavoriteEvent(favoriteEvent: FavoriteEventEntity)
 }

@@ -5,4 +5,6 @@ import com.example.dicodingevent.data.EventRepository
 
 class FavoritedEventViewModel(private val eventRepository: EventRepository) : ViewModel() {
     fun getFavoritedEvent() = eventRepository.getFavoritedEvent()
+
+    fun getFavoritedEventById(id: Int?) = eventRepository.getFavoritedEventById(id)
 }

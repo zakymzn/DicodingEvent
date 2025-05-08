@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.map
 import com.example.dicodingevent.data.local.entity.EventEntity
+import com.example.dicodingevent.data.local.entity.FavoriteEventEntity
 import com.example.dicodingevent.data.local.room.EventDao
 import com.example.dicodingevent.data.remote.retrofit.ApiService
 import com.example.dicodingevent.utils.AppExecutors
@@ -40,7 +41,6 @@ class EventRepository @Inject constructor(
                     isFavorited
                 )
             }
-            eventDao.deleteAll()
             eventDao.insertEvent(eventList)
         } catch (e: Exception) {
             Log.d("EventRepository", "getUpcomingEvent: ${e.message.toString()}")
@@ -75,7 +75,6 @@ class EventRepository @Inject constructor(
                     isFavorited
                 )
             }
-            eventDao.deleteAll()
             eventDao.insertEvent(eventList)
         } catch (e: Exception) {
             Log.d("EventRepository", "getFinishedEvent: ${e.message.toString()}")
@@ -110,7 +109,6 @@ class EventRepository @Inject constructor(
                     isFavorited
                 )
             }
-            eventDao.deleteAll()
             eventDao.insertEvent(eventList)
         } catch (e: Exception) {
             Log.d("EventRepository", "getUpcomingEvent: ${e.message.toString()}")
@@ -145,7 +143,6 @@ class EventRepository @Inject constructor(
                     isFavorited
                 )
             }
-            eventDao.deleteAll()
             eventDao.insertEvent(eventList)
         } catch (e: Exception) {
             Log.d("EventRepository", "getFinishedEvent: ${e.message.toString()}")
@@ -180,7 +177,6 @@ class EventRepository @Inject constructor(
                     isFavorited
                 )
             }
-            eventDao.deleteAll()
             eventDao.insertEvent(eventList)
         } catch (e: Exception) {
             Log.d("EventRepository", "searchEvent: ${e.message.toString()}")
@@ -213,7 +209,6 @@ class EventRepository @Inject constructor(
                 event?.category,
                 isFavorited
             )
-            eventDao.deleteById(event?.id)
             eventDao.insertDetailEvent(detailEvent)
         } catch (e: Exception) {
             Log.d("EventRepository", "getDetailEvent: ${e.message.toString()}")
@@ -223,13 +218,61 @@ class EventRepository @Inject constructor(
         emitSource(localData)
     }
 
-    fun getFavoritedEvent(): LiveData<List<EventEntity>> {
+    fun getFavoritedEvent(): LiveData<List<FavoriteEventEntity>> {
         return eventDao.getFavoritedEvent()
+    }
+
+    fun getFavoritedEventById(id: Int?): LiveData<FavoriteEventEntity> {
+        return eventDao.getFavoriteEventById(id)
     }
 
     suspend fun setEventFavorite(event: EventEntity, favoriteState: Boolean) {
         event.isFavorited = favoriteState
         eventDao.updateEvent(event)
+    }
+
+    suspend fun insertFavoriteEvent(event: EventEntity) {
+        val favoriteEvent = FavoriteEventEntity(
+            event.id,
+            event.name,
+            event.summary,
+            event.mediaCover,
+            event.registrants,
+            event.imageLogo,
+            event.link,
+            event.description,
+            event.ownerName,
+            event.cityName,
+            event.quota,
+            event.beginTime,
+            event.endTime,
+            event.category
+        )
+        event.isFavorited = true
+        eventDao.updateEvent(event)
+        eventDao.insertFavoriteEvent(favoriteEvent)
+    }
+
+    suspend fun deleteFavoriteEvent(event: EventEntity) {
+        val favoriteEvent = FavoriteEventEntity(
+            event.id,
+            event.name,
+            event.summary,
+            event.mediaCover,
+            event.registrants,
+            event.imageLogo,
+            event.link,
+            event.description,
+            event.ownerName,
+            event.cityName,
+            event.quota,
+            event.beginTime,
+            event.endTime,
+            event.category
+        )
+        event.isFavorited = false
+        eventDao.updateEvent(event)
+        eventDao.deleteFavoriteEvent(favoriteEvent)
     }
 
     companion object {

@@ -125,7 +125,7 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat() {
             val isWorkScheduled = workInfos?.any { workInfo ->
                 val state = workInfo.state
                 state == WorkInfo.State.ENQUEUED || state == WorkInfo.State.RUNNING
-            } ?: false
+            } == true
 
             if (!isWorkScheduled) {
                 workManager.enqueue(periodicWorkRequest!!)

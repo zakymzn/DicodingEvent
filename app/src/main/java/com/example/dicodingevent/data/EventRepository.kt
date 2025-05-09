@@ -222,10 +222,6 @@ class EventRepository @Inject constructor(
         return eventDao.getFavoritedEvent()
     }
 
-    fun getFavoritedEventById(id: Int?): LiveData<FavoriteEventEntity> {
-        return eventDao.getFavoriteEventById(id)
-    }
-
     suspend fun insertFavoriteEvent(event: EventEntity) {
         val favoriteEvent = FavoriteEventEntity(
             event.id,

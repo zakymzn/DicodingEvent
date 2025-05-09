@@ -1,9 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="EntryPointsManager">
+    <entry_points version="2.0">
+      <entry_point TYPE="field" FQNAME="com.example.dicodingevent.utils.AppExecutors diskIO" />
+      <entry_point TYPE="field" FQNAME="com.example.dicodingevent.utils.AppExecutors mainThread" />
+      <entry_point TYPE="field" FQNAME="com.example.dicodingevent.utils.AppExecutors networkIO" />
+    </entry_points>
     <pattern value="com.example.dicodingevent.data.response.Event" method="Event" />
     <pattern value="com.example.dicodingevent.data.response.EventDetailResponse" method="EventDetailResponse" />
     <pattern value="com.example.dicodingevent.data.response.EventListResponse" method="EventListResponse" />
     <pattern value="com.example.dicodingevent.data.response.ListEventsItem" method="ListEventsItem" />
+    <pattern value="com.example.dicodingevent.utils.AppExecutors" />
+    <pattern value="com.example.dicodingevent.utils.AppExecutors.MainThreadExecutor" />
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="jbr-21" project-jdk-type="JavaSDK">

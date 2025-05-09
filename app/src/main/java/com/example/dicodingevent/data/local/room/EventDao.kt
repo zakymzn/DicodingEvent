@@ -37,12 +37,6 @@ interface EventDao {
     @Update
     suspend fun updateEvent(event: EventEntity)
 
-    @Query("DELETE FROM event WHERE favorited = 0")
-    suspend fun deleteAll()
-
-    @Query("DELETE FROM event WHERE id = :id")
-    suspend fun deleteById(id: Int?)
-
     @Query("SELECT EXISTS(SELECT * FROM event WHERE id = :id AND favorited = 1)")
     suspend fun isEventFavorited(id: Int?): Boolean
 

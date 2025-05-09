@@ -226,11 +226,6 @@ class EventRepository @Inject constructor(
         return eventDao.getFavoriteEventById(id)
     }
 
-    suspend fun setEventFavorite(event: EventEntity, favoriteState: Boolean) {
-        event.isFavorited = favoriteState
-        eventDao.updateEvent(event)
-    }
-
     suspend fun insertFavoriteEvent(event: EventEntity) {
         val favoriteEvent = FavoriteEventEntity(
             event.id,

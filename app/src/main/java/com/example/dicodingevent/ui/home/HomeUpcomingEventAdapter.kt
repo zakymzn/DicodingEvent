@@ -46,7 +46,7 @@ class HomeUpcomingEventAdapter : ListAdapter<EventEntity, HomeUpcomingEventAdapt
                 tvName.text = "${event.name}"
                 tvOwner.text = this@MyViewHolder.itemView.context.getString(R.string.oleh, event.ownerName)
                 tvSummary.text = "${event.summary}"
-                tvQuota.text = if (ChronoUnit.MINUTES.between(today, parsedDateTime) > 0) "Sisa kuota: ${(event.registrants?.let { event.quota?.minus(it) })}" else null
+                tvQuota.text = if (ChronoUnit.SECONDS.between(today, parsedDateTime) > 0) "Sisa kuota: ${(event.registrants?.let { event.quota?.minus(it) })}" else null
                 tvCountdown.text = if (ChronoUnit.DAYS.between(today, parsedDateTime) > 0) {
                     "${ChronoUnit.DAYS.between(today, parsedDateTime)} hari lagi"
                 } else if (ChronoUnit.HOURS.between(today, parsedDateTime) in 1..24) {

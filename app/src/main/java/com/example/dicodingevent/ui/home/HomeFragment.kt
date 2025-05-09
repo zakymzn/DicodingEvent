@@ -68,12 +68,12 @@ class HomeFragment : Fragment() {
 
                     is Result.Success -> {
                         binding?.pbHomeUpcomingEvents?.visibility = View.GONE
+
                         val events = result.data
                         if (events.isEmpty()) {
                             binding?.apply {
                                 ivIllustration.visibility = View.VISIBLE
                                 tvNoUpcomingEvent.visibility = View.VISIBLE
-                                homeUpcomingEventAdapter.submitList(events)
                             }
                         } else {
                             binding?.apply {
@@ -102,7 +102,10 @@ class HomeFragment : Fragment() {
                     is Result.Success -> {
                         binding?.pbHomeFinishedEvents?.visibility = View.GONE
                         val events = result.data
-                        homeFinishedEventAdapter.submitList(events)
+
+                        if (events.isNotEmpty()) {
+                            homeFinishedEventAdapter.submitList(events)
+                        }
                     }
 
                     is Result.Error -> {
@@ -130,8 +133,7 @@ class HomeFragment : Fragment() {
 
         nestedScrollView?.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             if (scrollY > oldScrollY) {
-                bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.duration =
-                    200
+                bottomNavigationView.animate()?.translationY(bottomNavigationView.height.toFloat())?.duration = 200
             } else if (scrollY < oldScrollY) {
                 bottomNavigationView.animate()?.translationY(0f)?.duration = 200
             }
